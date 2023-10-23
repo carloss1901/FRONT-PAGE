@@ -568,6 +568,10 @@ video {
   }
 }
 
+.absolute {
+  position: absolute;
+}
+
 .relative {
   position: relative;
 }
@@ -835,10 +839,6 @@ video {
 
 .focus-visible\:outline-2:focus-visible {
   outline-width: 2px;
-}
-
-.focus-visible\:outline-sky-700:focus-visible {
-  outline-color: #0369a1;
 }
 
 @media (min-width: 640px) {
