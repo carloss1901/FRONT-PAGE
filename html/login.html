@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900">
+    <div class="grid grid-cols-1 md:grid-cols-2 h-screen">
+        <div class="flex min-h-full min-w-30 flex-col justify-center px-6 py-12 lg:px-8">
+            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+                <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Logo compañía">
+                <h2 class="mt-6 text-center text-white text-3xl font-bold leading-9 tracking-tight text-gray-900">Iniciar <a class="text-indigo-500">sesión</a></h2>
+            </div>
+
+            <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                <form action="#" class="space-y-5" method="POST">
+                    <div class="mx-auto">
+                        <label for="username" class="block text-base font-medium leading-6 text-gray-300">Username</label>
+                        <div class="mt-2">
+                            <input id="usernameInput" type="text" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-base font-medium leading-6 text-gray-300">Contraseña</label>
+                        <div class="mt-2 flex">
+                            <input id="passwordInput" type="password" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                            <span id="togglePassword" class="relative cursor-pointer">
+                                <i id="eye" class="fas fa-eye text-gray-400"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 mt-7 text-base font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-sky-700">Iniciar sesión</button>
+                    </div>
+                </form>
+
+                <p class="mt-7 text-center text-base text-gray-400">
+                    ¿No tienes una cuenta?
+                    <a href="/html/formulario.html" class="font-semibold leading-6 text-indigo-500 hover:text-indigo-400 cursor-pointer hover:underline">Registrarme ahora</a>
+                </p>
+            </div>
+        </div>
+        <img class=" hidden md:block md:h-full object-cover" src="/img/login2.avif" alt="">
+    </div>
+
+    <script src="../js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
