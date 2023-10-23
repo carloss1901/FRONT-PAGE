@@ -43,7 +43,7 @@ logoI.addEventListener('click', () => {
     window.location.href = "index.html"
 })
 login.addEventListener('click', () => {
-    window.location.href = "html/login.html"  
+    window.location.href = "src/html/login.html"  
 })
 cart.addEventListener('click', (event) => {
     event.stopPropagation
