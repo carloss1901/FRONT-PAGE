@@ -5,9 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link href="/dist/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #eye {
+            position: absolute;
+            top:50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body class="bg-gray-900">
     <div class="grid grid-cols-1 md:grid-cols-2 h-screen">
@@ -47,7 +55,7 @@
                 </p>
             </div>
         </div>
-        <img class=" hidden md:block md:h-full object-cover" src="/img/login2.avif" alt="">
+        <img class=" hidden md:block md:h-full object-cover" src="/src/img/login2.avif" alt="">
     </div>
 
     <script src="../js/login.js"></script>
