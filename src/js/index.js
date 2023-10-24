@@ -9,13 +9,13 @@ const nm = localStorage.getItem('nm')
 const userMenu = document.getElementById('user-menu')
 const menuIconWrapper = document.getElementById('menu-icon-wrapper')
 
+const templateCard = document.getElementById('template-card').content
 // const svgCart = document.querySelector('.icon--cart')
 // const carritoInfo = document.querySelector('#carrito-info')
-// const templateCard = document.getElementById('template-card').content
 // const templateFooter = document.getElementById('template-footer').content
 // const templateCarrito = document.getElementById('template-carrito').content
 // const cartCountElement = document.getElementById('cart-count')
-// const fragment = document.createDocumentFragment()
+const fragment = document.createDocumentFragment()
 
 const botonOpciones = document.getElementById('botonOpciones')
 const svgAbrir = document.getElementById('abrir')
@@ -32,22 +32,23 @@ var searchForm = document.getElementById('searchForm')
 var searchInput = document.getElementById('searchInput')
 
 let carrito = {}
-let rutaProductosRecomendados = 'http://localhost:4000/api/producto/listar/recomendado'
+let routeProductosRecomendados = 'http://localhost:4000/api/producto/listar/recomendado'
+let routeCategoriasActivas = 'https://localhost:4000/api/categoria/listar/ac'
+
 
 const fetchData = async (ruta) => {
     try {
         const res = await fetch(ruta)
         const data = await res.json()
         // cards.innerHTML = ''
-        // pintarCards(data)
-        console.log(data)
+        pintarCards(data)
+        // console.log(data)
     } catch (error) {
         console.log(error)
     }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
-    fetchData(rutaProductosRecomendados)
+    fetchData(routeProductosRecomendados)
     // if(localStorage.getItem('carrito')) {
     //     carrito = JSON.parse(localStorage.getItem('carrito'))
     //     pintarCarrito()
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //     event.stopPropagation
 //     mostrarProductosCarrito()
 // })
-// fetch('http://localhost:8080/categoria/listar/activos')
+// fetch(routeCategoriasActivas)
 // .then(response => response.json())
 // .then(data => {
 //     const categorias = document.querySelector('#categorias');
@@ -77,30 +78,29 @@ document.addEventListener('DOMContentLoaded', () => {
 // })
 // .catch(error => console.error(error));
 
-// const pintarCards = data => {
-//     data.forEach(producto => {
-//         templateCard.querySelector('h5').textContent = producto.nombre
-//         templateCard.querySelector('p').textContent = formatCurrency(producto.precio)   
-//         const imgElement = templateCard.querySelector('img');
-//         imgElement.onerror = function() {
-//             this.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png");
-//         }
+const pintarCards = data => {
+    data.forEach(producto => {
+        //templateCard.querySelector('h2').textContent = producto.nombre
+        templateCard.querySelector('p').textContent = formatCurrency(producto.precio)   
+        // const imgElement = templateCard.querySelector('img');
+        // imgElement.onerror = function() {
+        //     this.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png");
+        // }
 
-//         if (producto.imagen && isUrlValid(producto.imagen)) {
-//             imgElement.setAttribute("src", producto.imagen);
-//         } else {
-//             imgElement.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png");
-//         }
-//         templateCard.querySelector('.btn-dark').dataset.id = producto.id_producto
+        // // if (producto.imagen && isUrlValid(producto.imagen)) {
+        // //     imgElement.setAttribute("src", producto.imagen);
+        // // } else {
+        // //     imgElement.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png");
+        // // }
+        // templateCard.querySelector('button').dataset.id = producto.id_producto
 
-//         const clone = templateCard.cloneNode(true)
-//         fragment.appendChild(clone)
-//     })
-//     cards.appendChild(fragment)
-// }
-// const isUrlValid = url => {
-//     return url.startsWith("http://") || url.startsWith("https://");
-// }
+        const clone = templateCard.cloneNode(true)
+        fragment.appendChild(clone)
+    })
+    items.appendChild(fragment)
+    //cards.appendChild(fragment)
+}
+
 // const addCarrito = e => {
 //     if(e.target.classList.contains('btn-dark')) {
 //         setCarrito(e.target.parentElement)
@@ -375,10 +375,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
 //       return false
 // }
-// function formatCurrency(amount) {
-//     const formatter = new Intl.NumberFormat('es-PE', { style:'currency', currency:'PEN' })
-//     return formatter.format(amount)
-// }
+function formatCurrency(amount) {
+    const formatter = new Intl.NumberFormat('es-PE', { style:'currency', currency:'PEN' })
+    return formatter.format(amount)
+}
 
 // var searchButton = document.querySelector('.search-form #buscar')
 // searchButton.addEventListener('click', function(event) {

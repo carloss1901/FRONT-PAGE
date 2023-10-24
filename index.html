@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-    <link rel="stylesheet" href="/src/css/estilos.css">
+    <!-- <link rel="stylesheet" href="/src/css/estilos.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-700">
     <nav class="bg-gray-800">
@@ -86,20 +87,67 @@
           </div>
     </nav>
     <section>
-        <template id="template-card">
-            <div id="card" class="bg-blue-500">
-                <img src="https://i1.sndcdn.com/artworks-000485902113-jcjo27-t500x500.jpg" alt="">
-                <div id="card-body">
-                    <h2>Titulo</h2>
-                    <p>precio</p>
-                    <button id="btn-add-to-cart">
-                        Añadir al carrito
-                    </button>
+        <div class="relative rounded-xl overflow-auto p-2">
+            <div class="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800">
+                <img class="-left-6 w-24 h-24 rounded-md shadow-lg" src="https://m.media-amazon.com/images/I/315rJ5ihrHL._UX358_FMwebp_QL85_.jpg">
+                <div class="min-w-0 py-5 pr-5">
+                    <h2 class="text-gray-300 font-medium text-sm sm:text-base truncate">My Room - Forrest Frank</h2>
+                    <p class="text-gray-200 font-medium text-sm sm:text-base mt-2">Assistant</p>
                 </div>
             </div>
-        </template>
+        </div>
+        <div class="relative rounded-xl overflow-auto p-2">
+            <div class="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800">
+                <img class="-left-6 w-24 h-24 rounded-md shadow-lg" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
+                <div class="min-w-0 py-5 pr-5">
+                    <h2 class="text-gray-300 font-medium text-sm sm:text-base truncate">Your Soul - Forrest Frank</h2>
+                    <p class="text-gray-200 font-medium text-sm sm:text-base mt-2">Assistant</p>
+                </div>
+            </div>
+        </div>
+        <div class="relative rounded-xl overflow-auto p-2">
+            <div class="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800">
+                <img class="-left-6 w-24 h-24 rounded-md shadow-lg" src="https://i1.sndcdn.com/artworks-pPpctSHG7jf5-0-t500x500.png">
+                <div class="min-w-0 py-5 pr-5">
+                    <h2 class="text-gray-300 font-medium text-sm sm:text-base truncate">Way Out - FKJ</h2>
+                    <p class="text-gray-200 font-medium text-sm sm:text-base mt-2">Assistant</p>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="contenedor">
+            <div class="text-white">a</div>
+            <div id="items" class="row"></div>
+        </div> -->
     </section>
 
+    <template id="template-card">
+        <div class="">
+            <!-- card -->
+            <div id="card" class="bg-white text-gray-700 w-72 shadow-lg rounded-md overflow-hidden">
+                <img src="https://m.media-amazon.com/images/I/315rJ5ihrHL._UX358_FMwebp_QL85_.jpg" alt="" class="w-full h-full object-cover">
+                <div id="card-body" class="p-5 flex flex-col gap-3">
+                    <!-- Etiqueta -->
+                    <div class="flex items-center gap-2">
+                        <span class="px-3 py-1 text-xs rounded-full bg-gray-100 font-semibold">#Recomendado</span>
+                    </div>
+    
+                    <!-- Título del Producto -->
+                    <h2 class="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap">Best Producto Ever</h2>
+    
+                    <!-- Precio del Producto -->
+                    <div class="text-xl font-bold">
+                        <p class="text-xl font-bold"></p>
+                    </div>
+                    <!-- Botón -->
+                    <div class="flex gap-2">
+                        <button class="bg-yellow-500 hover:bg-yellow-400 px-6 py-2 rounded-md text-white font-medium tracking-wider transition">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
     <!-- <header>
         <div class="header-wrapper">
           <div class="logo" id="logo">Inicio</div>
@@ -148,7 +196,7 @@
         </div>
       </div> -->
     <!-- <template id="template-card">
-        <div class="col-12 mb-2 col-md-4">
+        <div    >
             <div class="card">
                 <img src="" alt="" class="card-img-top">
                 <div class="card-body">
