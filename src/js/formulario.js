@@ -8,6 +8,8 @@ const dniInput = document.getElementById('dniInput')
 const celularInput = document.getElementById('celularInput')
 const direccionInput = document.getElementById('direccionInput')
 
+const miBoton = document.getElementById('miBoton')
+
 
 togglePassword.addEventListener('click', function() {
     if(passwordInput.type === 'password') {
@@ -19,69 +21,73 @@ togglePassword.addEventListener('click', function() {
     }
 })
 
-submitForm.addEventListener('click', function(event) {
-    event.preventDefault()
-    validarCampos()
-    if(usernameInput.style.boxShadow === '' &&
-    passwordInput.style.boxShadow === '' &&
-    nombresInput.style.boxShadow === '' &&
-    apellidosInput.style.boxShadow === '' &&
-    dniInput.style.boxShadow === '' &&
-    celularInput.style.boxShadow === '' &&
-    direccionInput.style.boxShadow === '') {
-        const {value: username } = usernameInput
-        const {value: password } = passwordInput
-        const {value: nombres } = nombresInput
-        const {value: apellidos } = apellidosInput
-        const {value: dni } = dniInput
-        const {value: celular } = celularInput
-        const {value: direccion } = direccionInput
-        const estado = 1
-        const rol = 2
-
-        const formData = {
-            username: username,
-            clave: password,
-            nombres: nombres,
-            apellidos: apellidos,
-            dni: dni,
-            celular: celular,
-            direccion: direccion,
-            estado: estado,
-            itemsRol: [{
-                id_rol: rol
-            }]
-        }
-
-        fetch('http://localhost:8080/usuario/registrar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if(response.status === 409) {
-                usernameEnUso()
-            } else if(response.status === 400) {
-                dniEnUso()
-            } else if(response.status === 404) {
-                celularEnUso()
-            } else if(response.status === 200) {
-                notificacionConfirmacion()
-                limpiarCampos()
-                setTimeout(() => {
-                    irLogin()
-                }, 1200)
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-    } else {
-        notificacionError()
-    }
+miBoton.addEventListener("click", function() {
+    notificacionConfirmacion()
 })
+
+// submitForm.addEventListener('click', function(event) {
+//     event.preventDefault()
+//     validarCampos()
+//     if(usernameInput.style.boxShadow === '' &&
+//     passwordInput.style.boxShadow === '' &&
+//     nombresInput.style.boxShadow === '' &&
+//     apellidosInput.style.boxShadow === '' &&
+//     dniInput.style.boxShadow === '' &&
+//     celularInput.style.boxShadow === '' &&
+//     direccionInput.style.boxShadow === '') {
+//         const {value: username } = usernameInput
+//         const {value: password } = passwordInput
+//         const {value: nombres } = nombresInput
+//         const {value: apellidos } = apellidosInput
+//         const {value: dni } = dniInput
+//         const {value: celular } = celularInput
+//         const {value: direccion } = direccionInput
+//         const estado = 1
+//         const rol = 2
+
+//         const formData = {
+//             username: username,
+//             clave: password,
+//             nombres: nombres,
+//             apellidos: apellidos,
+//             dni: dni,
+//             celular: celular,
+//             direccion: direccion,
+//             estado: estado,
+//             itemsRol: [{
+//                 id_rol: rol
+//             }]
+//         }
+
+//         fetch('http://localhost:8080/usuario/registrar', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(formData)
+//         })
+//         .then(response => {
+//             if(response.status === 409) {
+//                 usernameEnUso()
+//             } else if(response.status === 400) {
+//                 dniEnUso()
+//             } else if(response.status === 404) {
+//                 celularEnUso()
+//             } else if(response.status === 200) {
+//                 notificacionConfirmacion()
+//                 limpiarCampos()
+//                 setTimeout(() => {
+//                     irLogin()
+//                 }, 1200)
+//             }
+//         })
+//         .catch(error => {
+//             console.error(error)
+//         })
+//     } else {
+//         notificacionError()
+//     }
+// })
 
 function filtrarNumeros(event) {
     const input = event.target
@@ -113,9 +119,9 @@ function notificacionConfirmacion() {
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Se registró exitosamente :)',
+        title: 'Creíste que funcionaría? xD .. Báñate si? :)',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 3000,
         toast: true,
         background: '#f0fff0',
         iconColor: '#50C878',
