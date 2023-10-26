@@ -56,7 +56,9 @@
                                 <path d="M7.31 5h18.27l-1.44 10H9.78L6.22 0H0"></path>
                             </g>
                         </svg>
-                        <span class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">1</span>
+                        <span id="contador-secundario" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
+                            <span class="flex items-center justify-center w-full h-full">1</span>
+                        </span>
                     </button>
                 </div>
 
@@ -70,7 +72,9 @@
                                 <path d="M7.31 5h18.27l-1.44 10H9.78L6.22 0H0"></path>
                             </g>
                         </svg>
-                        <span class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">1</span>
+                        <span id="contador-principal" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
+                            <span class="flex items-center justify-center w-full h-full">1</span>
+                        </span>
                     </button>
                     <div class="relative ml-4 sm:ml-10">
                         <a href="src/html/login.html" class="hidden sm:block text-sm sm:text-base text-white font-semibold sm:font-semibold border-0 px-3 py-2 rounded-md bg-cyan-950 hover:bg-cyan-800">Iniciar Sesión</a>
@@ -94,7 +98,6 @@
                 </div>
             </div>
         </div>
-
         <div class="hidden sm:hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pb-3 pt-2">
               <a href="src/html/misPedidos.html" class="text-gray-300 hover:bg-gray-700 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Pedidos</a>
@@ -103,19 +106,28 @@
             </div>
           </div>
     </nav>
-    <section class="sm:flex">
+    <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base sm:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
+        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Soul</ul>
+        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Jazz</ul>
+        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Rock</ul>
+        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Pop</ul>
+        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Blues</ul>
+        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Worship</ul>
+    </section>
+    <!-- <section id="cards" class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1"></section> -->
+    <section class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1">
         <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
                     <div class="w-full flex flex-col sm:h-full">
                         <div class="hidden sm:block sm:mt-1 sm:mb-2">
                             <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
                         </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold sm:mb-1 sm:h-auto">Chocolate Sublime 800gr - Winter</h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-lg sm:mt-2 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
-                            <button id="button-card" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 text-sm sm:text-base tracking-wider transition gap-1">
+                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Your Soul</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
@@ -125,17 +137,17 @@
             </div>
         </div>
         <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 md:w-56 md:h-96">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover md:h-44 md:w-52 rounded-md sm:mx-auto md:h-44 md:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF9F-_zQFz8dii9OYqgVqgd2BPVNrZ2Lv9cVf8E7ra2zeko6jqHpodhcy_I6IJesfP8u0&usqp=CAU" alt="">
                     <div class="w-full flex flex-col sm:h-full">
                         <div class="hidden sm:block sm:mt-1 sm:mb-2">
                             <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
                         </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-base md:text-lg font-semibold sm:mb-1 sm:h-auto">Cerveza Cristal 355ml - 6 Latas</h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base md:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
-                            <button id="button-card" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 text-sm sm:text-sm md:text-base tracking-wider transition gap-1">
+                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">My Room</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
@@ -144,18 +156,18 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
+        <div class="relative rounded-xl mt-1 p-1 mx-1">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/de/a4/ba/dea4ba3e-8624-b8c9-16cc-b812951bd511/5054197199202.jpg/1200x630bb.jpg" alt="">
                     <div class="w-full flex flex-col sm:h-full">
                         <div class="hidden sm:block sm:mt-1 sm:mb-2">
                             <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
                         </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold sm:mb-1 sm:h-auto">Chocolate Sublime </h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-lg sm:mt-2 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
-                            <button id="button-card" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 text-sm sm:text-base tracking-wider transition gap-1">
+                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Freedom</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Andrez Babii</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
@@ -163,83 +175,107 @@
                     </div>
                 </div>
             </div>
-        </div> -->
-        <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-52 sm:h-72">
-                <div class="flex min-h-min p-2 gap-2 sm:flex-col">
-                    <img class="h-24 w-24 rounded-md" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
-                    <div class="w-full flex flex-col">
-                        <h2 class="text-white text-sm font-semibold mt-1">Cerveza Cristal 355ml 6 latas</h2>
-                        <p class="mt-auto text-white text-sm font-semibold mt-1">S/. 2.00</p>
-                        <div class="mt-auto justify-between">
-                            <button class="ml-auto flex items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
-                                Añadir
+        </div>
+        <div class="relative rounded-xl mt-1 p-1 mx-1">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
+                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
+                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/31/90/aa/3190aa29-17f6-f881-0fac-01e172a0cd09/dj.wrjcwkhr.png/1200x1200bf-60.jpg" alt="">
+                    <div class="w-full flex flex-col sm:h-full">
+                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
+                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
+                        </div>
+                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Wake Up</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Terrian</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
+                                Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
-        <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md">
-                <div class="flex min-h-min p-2 gap-2">
-                    <img class="h-24 w-24 rounded-md" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
-                    <div class="w-full flex flex-col">
-                        <h2 class="text-white text-sm font-semibold mt-1">Cerveza Cristal 355ml 6 latas</h2>
-                        <p class="mt-auto text-white text-sm font-semibold mt-1">S/. 2.00</p>
-                        <div class="mt-auto justify-between">
-                            <button class="ml-auto flex items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
-                                Añadir
-                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="relative rounded-xl overflow-auto p-2">
-            <div class="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800">
-                <img class="-left-6 w-24 h-24 rounded-md shadow-lg" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
-                <div class="min-w-0 py-5 pr-5">
-                    <h2 class="text-gray-300 font-medium text-sm sm:text-base truncate">Your Soul - Forrest Frank</h2>
-                    <p class="text-gray-200 font-medium text-sm sm:text-base mt-2">Assistant</p>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div id="contenedor">
-            <div id="items" class="row"></div>
-        </div> -->
+        </div>
     </section>
 
+    <!-- <div class=""> 
+        <table class="table">
+            <thead id>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Acción</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody id="items"></tbody>
+            <tfoot>
+                <tr id="footer">
+                    <th scope="row" colspan="5">Carrito vacío - Comience a comprar!</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div> -->
+
     <template id="template-card">
-        <div class="">
-            <!-- card -->
-            <div id="card" class="bg-white text-gray-700 w-72 shadow-lg rounded-md overflow-hidden">
-                <img src="https://m.media-amazon.com/images/I/315rJ5ihrHL._UX358_FMwebp_QL85_.jpg" alt="" class="w-full h-full object-cover">
-                <div id="card-body" class="p-5 flex flex-col gap-3">
-                    <!-- Etiqueta -->
-                    <div class="flex items-center gap-2">
-                        <span class="px-3 py-1 text-xs rounded-full bg-gray-100 font-semibold">#Recomendado</span>
-                    </div>
-    
-                    <!-- Título del Producto -->
-                    <h2 class="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap">Best Producto Ever</h2>
-    
-                    <!-- Precio del Producto -->
-                    <div class="text-xl font-bold">
-                        <p class="text-xl font-bold"></p>
-                    </div>
-                    <!-- Botón -->
-                    <div class="flex gap-2">
-                        <button class="bg-yellow-500 hover:bg-yellow-400 px-6 py-2 rounded-md text-white font-medium tracking-wider transition">
-                            Add to cart
-                        </button>
+        <div class="relative mt-1 p-1 mx-1">
+            <div class="rounded-xl sm:rounded overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
+                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
+                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="">
+                    <div class="w-full flex flex-col sm:h-full">
+                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
+                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
+                        </div>
+                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Your Soul</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
+                                Agregar
+                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </template>
+    <template id="template-category">
+        <ul id="category-name" class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Lácteos</ul>
+    </template>
+
+
+    <!-- <template id="template-footer">
+        <th scope="row" colspan="2">Total productos</th>
+        <td>10</td>
+        <td>
+            <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+                vaciar todo
+            </button>
+        </td>
+        <td class="font-weight-bold bg-indigo-300">S/. <span>5000</span></td>
+    </template>
+    <template id="template-carrito">
+        <tr class="bg-gray-400">
+            <th scope="row">id</th>
+            <td>Café</td>
+            <td>1</td>
+            <td>
+                <button id="sumar" class="btn btn-info btn-sm bg-blue-500">
+                    +
+                </button>
+                <button id="restar" class="btn btn-danger btn-sm bg-indigo-500">
+                    -
+                </button>
+            </td>
+            <td>S/. <span>500</span></td>
+            <td>
+                <button id="quitar" class="btn btn-danger btn-sm">
+                    Quitar
+                </button>
+            </td>
+        </tr>
+    </template> -->
     <!-- <header>
         <div class="header-wrapper">
           <div class="logo" id="logo">Inicio</div>
