@@ -7,6 +7,26 @@
     <title>Inicio</title>
     <!-- <link rel="stylesheet" href="/src/css/estilos.css"> -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Abel&family=Dosis&family=Pacifico&display=swap');
+
+        #title-card {
+            font-family: 'Montserrat', sans-serif;
+        }
+        #price-card {
+            font-family: 'Abel', sans-serif;
+        }
+        #button-card-1 {
+            background-color: #007acc;
+        }
+        #button-card-2 {
+            background-color: #c8584e;
+        }
+        #button-card-3 {
+            background-color: #008b8b;
+        }
+    </style>
 </head>
 <body class="bg-slate-700">
     <nav class="bg-gray-800">
@@ -86,30 +106,102 @@
             </div>
           </div>
     </nav>
-    <section>
+    <section class="sm:flex">
         <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md">
-                <div class="flex min-h-min p-2 gap-3">
-                    <img class="h-24 w-24 rounded-md" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
-                    <div class="w-full flex flex-col">
-                        <h2 class="text-white text-sm mb-1 font-semibold">Chocolate Sublime Extremo 50gr</h2>
-                        <p class="mt-auto text-white text-sm">S/. 2.00</p>
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
+                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
+                    <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <div class="w-full flex flex-col sm:h-full">
+                        <div class="hidden sm:block sm:mt-1">
+                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
+                        </div>
+                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold mt-1 sm:h-auto">Chocolate Sublime 800 gr - Winter </h2>
+                        <p id="price-card" class="mt-auto text-green-600 text-sm mt-1 sm:text-lg sm:mt-1 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
+                            <button id="button-card-1" class="flex ml-auto items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
+                                Añadir
+                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="relative rounded-xl overflow-auto p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md">
-                <div class="flex min-h-min p-2 gap-3">
-                    <img class="h-24 w-24 rounded-md" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
-                    <div class="w-full flex flex-col">
-                        <h2 class="text-white text-sm mb-1 font-semibold">Chocolate Sublime Extremo 50gr</h2>
-                        <p class="mt-auto text-white text-sm">S/. 2.00</p>
+        <div class="relative rounded-xl mt-1 p-1 mx-1">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
+                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
+                    <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <div class="w-full flex flex-col sm:h-full">
+                        <div class="hidden sm:block sm:mt-1">
+                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
+                        </div>
+                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold mt-1 sm:h-auto">Chocolate Sublime 800 gr - Winter </h2>
+                        <p id="price-card" class="mt-auto text-green-600 text-sm mt-1 sm:text-lg sm:mt-1 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
+                            <button id="button-card-2" class="flex ml-auto items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
+                                Añadir
+                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="relative rounded-xl overflow-auto p-2">
+        <div class="relative rounded-xl mt-1 p-1 mx-1">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
+                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
+                    <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <div class="w-full flex flex-col sm:h-full">
+                        <div class="hidden sm:block sm:mt-1">
+                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
+                        </div>
+                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold mt-1 sm:h-auto">Chocolate Sublime 800 gr - Winter </h2>
+                        <p id="price-card" class="mt-auto text-green-600 text-sm mt-1 sm:text-lg sm:mt-1 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
+                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
+                            <button id="button-card-3" class="flex ml-auto items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
+                                Añadir
+                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-52 sm:h-72">
+                <div class="flex min-h-min p-2 gap-2 sm:flex-col">
+                    <img class="h-24 w-24 rounded-md" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <div class="w-full flex flex-col">
+                        <h2 class="text-white text-sm font-semibold mt-1">Cerveza Cristal 355ml 6 latas</h2>
+                        <p class="mt-auto text-white text-sm font-semibold mt-1">S/. 2.00</p>
+                        <div class="mt-auto justify-between">
+                            <button class="ml-auto flex items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
+                                Añadir
+                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md">
+                <div class="flex min-h-min p-2 gap-2">
+                    <img class="h-24 w-24 rounded-md" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <div class="w-full flex flex-col">
+                        <h2 class="text-white text-sm font-semibold mt-1">Cerveza Cristal 355ml 6 latas</h2>
+                        <p class="mt-auto text-white text-sm font-semibold mt-1">S/. 2.00</p>
+                        <div class="mt-auto justify-between">
+                            <button class="ml-auto flex items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
+                                Añadir
+                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="relative rounded-xl overflow-auto p-2">
             <div class="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800">
                 <img class="-left-6 w-24 h-24 rounded-md shadow-lg" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
                 <div class="min-w-0 py-5 pr-5">
@@ -117,18 +209,8 @@
                     <p class="text-gray-200 font-medium text-sm sm:text-base mt-2">Assistant</p>
                 </div>
             </div>
-        </div>
-        <!-- <div class="relative rounded-xl overflow-auto p-2">
-            <div class="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800">
-                <img class="-left-6 w-24 h-24 rounded-md shadow-lg" src="https://i1.sndcdn.com/artworks-pPpctSHG7jf5-0-t500x500.png">
-                <div class="min-w-0 py-5 pr-5">
-                    <h2 class="text-gray-300 font-medium text-sm sm:text-base truncate">Way Out - FKJ</h2>
-                    <p class="text-gray-200 font-medium text-sm sm:text-base mt-2">Assistant</p>
-                </div>
-            </div>
         </div> -->
         <!-- <div id="contenedor">
-            <div class="text-white">a</div>
             <div id="items" class="row"></div>
         </div> -->
     </section>
