@@ -17,14 +17,11 @@
         #price-card {
             font-family: 'Abel', sans-serif;
         }
-        #button-card-1 {
-            background-color: #007acc;
+        #button-card {
+            background-color: #bd544a;
         }
-        #button-card-2 {
-            background-color: #c8584e;
-        }
-        #button-card-3 {
-            background-color: #008b8b;
+        #button-card:hover {
+            background-color: #c56259;
         }
     </style>
 </head>
@@ -112,14 +109,14 @@
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
                     <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
                     <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1">
+                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
                             <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
                         </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold mt-1 sm:h-auto">Chocolate Sublime 800 gr - Winter </h2>
-                        <p id="price-card" class="mt-auto text-green-600 text-sm mt-1 sm:text-lg sm:mt-1 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
+                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold sm:mb-1 sm:h-auto">Chocolate Sublime 800gr - Winter</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-lg sm:mt-2 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
-                            <button id="button-card-1" class="flex ml-auto items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
-                                Añadir
+                            <button id="button-card" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 text-sm sm:text-base tracking-wider transition gap-1">
+                                Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
                         </div>
@@ -128,18 +125,18 @@
             </div>
         </div>
         <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
+            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 md:w-56 md:h-96">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
+                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover md:h-44 md:w-52 rounded-md sm:mx-auto md:h-44 md:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
                     <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1">
+                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
                             <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
                         </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold mt-1 sm:h-auto">Chocolate Sublime 800 gr - Winter </h2>
-                        <p id="price-card" class="mt-auto text-green-600 text-sm mt-1 sm:text-lg sm:mt-1 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
+                        <h2 id="title-card" class="text-white text-sm sm:text-base md:text-lg font-semibold sm:mb-1 sm:h-auto">Cerveza Cristal 355ml - 6 Latas</h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base md:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
-                            <button id="button-card-2" class="flex ml-auto items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
-                                Añadir
+                            <button id="button-card" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 text-sm sm:text-sm md:text-base tracking-wider transition gap-1">
+                                Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
                         </div>
@@ -147,26 +144,26 @@
                 </div>
             </div>
         </div>
-        <div class="relative rounded-xl mt-1 p-1 mx-1">
+        <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
             <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-96">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
                     <img class="h-24 w-24 rounded-md sm:mx-auto sm:h-44 sm:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
                     <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1">
+                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
                             <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
                         </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold mt-1 sm:h-auto">Chocolate Sublime 800 gr - Winter </h2>
-                        <p id="price-card" class="mt-auto text-green-600 text-sm mt-1 sm:text-lg sm:mt-1 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
+                        <h2 id="title-card" class="text-white text-sm sm:text-lg font-semibold sm:mb-1 sm:h-auto">Chocolate Sublime </h2>
+                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-lg sm:mt-2 sm:mb-2 sm:text-green-600 font-semibold tracking-wider">S/ 10.00</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:h-auto">
-                            <button id="button-card-3" class="flex ml-auto items-center gap-1 bg-stone-600 hover:bg-yellow-700 text-gray-300 font-semibold font-sm rounded-md p-1 text-sm tracking-wider transition">
-                                Añadir
+                            <button id="button-card" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 text-sm sm:text-base tracking-wider transition gap-1">
+                                Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- <div class="relative rounded-xl mt-1 p-1 mx-1">
             <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-52 sm:h-72">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col">
