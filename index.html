@@ -77,7 +77,7 @@
                         </span>
                     <button/>
 
-                    <div id="show-carrito" class="hidden absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1">
+                    <div id="show-carrito" class="hidden absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1 z-10">
                         <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
                             <div class="flex min-h-min p-2 gap-2">
                                 <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
@@ -86,9 +86,9 @@
                                     <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
                                     <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
                                         <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
-                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg-rose-600 rounded-md">-</>
+                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg--400 rounded-md">-</>
                                         <div class="ml-auto">
-                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600">Quitar</span>
+                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600 rounded-md py-1">Quitar</span>
                                         </div>
                                     </div>
                                 </div>
@@ -96,15 +96,15 @@
                         </div>
                         <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
                             <div class="flex min-h-min p-2 gap-2">
-                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
+                                <img class="h-20 w-20" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF9F-_zQFz8dii9OYqgVqgd2BPVNrZ2Lv9cVf8E7ra2zeko6jqHpodhcy_I6IJesfP8u0&usqp=CAU">
                                 <div class="w-full flex flex-col">
                                     <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
                                     <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
                                     <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
                                         <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
-                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg-rose-600 rounded-md">-</>
+                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg--400 rounded-md">-</>
                                         <div class="ml-auto">
-                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600">Quitar</span>
+                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600 rounded-md py-1">Quitar</span>
                                         </div>
                                     </div>
                                 </div>
@@ -112,15 +112,15 @@
                         </div>
                         <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
                             <div class="flex min-h-min p-2 gap-2">
-                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
+                                <img class="h-20 w-20" src="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/de/a4/ba/dea4ba3e-8624-b8c9-16cc-b812951bd511/5054197199202.jpg/1200x630bb.jpg">
                                 <div class="w-full flex flex-col">
                                     <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
                                     <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
                                     <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
                                         <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
-                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg-rose-600 rounded-md">-</>
+                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg--400 rounded-md">-</>
                                         <div class="ml-auto">
-                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600">Quitar</span>
+                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600 rounded-md py-1">Quitar</span>
                                         </div>
                                     </div>
                                 </div>
@@ -158,10 +158,10 @@
             </div>
         </div>
     </nav>
-    <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700"></section>
+    <!-- <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700"></section> -->
     <section id="cards" class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1 sm:px-12 md:px-14 2xl:px-52"></section>
 
-    <!-- <section class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
+    <section class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Soul</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Jazz</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Rock</ul>
@@ -250,9 +250,9 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
-    <div class=""> 
+    <div class="hidden"> 
         <table class="table">
             <thead id>
                 <tr>
