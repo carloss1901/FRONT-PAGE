@@ -4,24 +4,27 @@ const footer = document.getElementById('footer')
 const cart = document.getElementById('cart')
 const categorias = document.getElementById('categorias')
 
+const svgAbrir = document.getElementById('svgAbrir')
+const svgCerrar = document.getElementById('svgCerrar')
+const mobileMenu = document.getElementById('mobile-menu')
+
+const buttonCarrito = document.getElementById('button-carrito')
+const showCarrito = document.getElementById('show-carrito')
+
 const userDataString = localStorage.getItem('userData')
 const userName = localStorage.getItem('userName')
 const nm = localStorage.getItem('nm')
 
-// const templateCard = document.getElementById('template-card').content
-// const templateFooter = document.getElementById('template-footer').content
-// const templateCarrito = document.getElementById('template-carrito').content
-// const templateCategory = document.getElementById('template-category').content
+const templateCard = document.getElementById('template-card').content
+const templateFooter = document.getElementById('template-footer').content
+const templateCarrito = document.getElementById('template-carrito').content
+const templateCategory = document.getElementById('template-category').content
 const fragment = document.createDocumentFragment()
 
 // const carritoInfo = document.querySelector('#carrito-info')
 // const cartCountElement = document.getElementById('cart-count')
 // var searchForm = document.getElementById('searchForm')
 // var searchInput = document.getElementById('searchInput')
-
-const svgAbrir = document.getElementById('svgAbrir')
-const svgCerrar = document.getElementById('svgCerrar')
-const mobileMenu = document.getElementById('mobile-menu')
 
 let carrito = {}
 let routeProductosRecomendados = 'http://localhost:4000/api/producto/listar/recomendado'
@@ -83,12 +86,15 @@ const fetchInitializer = async () => {
     }
 }
 
-// cards.addEventListener('click', e => {
-//     addCarrito(e)
-// })
-// items.addEventListener('click', e => {
-//     btnAccion(e)
-// })
+cards.addEventListener('click', e => {
+    addCarrito(e)
+})
+items.addEventListener('click', e => {
+    btnAccion(e)
+})
+buttonCarrito.addEventListener('click', () => {
+    showCarrito.classList.toggle('hidden')
+})
 // cart.addEventListener('click', (event) => {
 //     event.stopPropagation
 //     mostrarProductosCarrito()
