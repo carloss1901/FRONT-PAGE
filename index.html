@@ -63,21 +63,71 @@
                 </div>
 
                 <div class="absolute inset-y-0 flex items-center sm:static sm:ml-6 sm:pr-0">
-                    <div>
-                        <button id="button-carrito" type="button" class="hidden sm:block relative bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span class="absolute -inset-1.5"></span>
-                            <svg class="h-6 w-6" fill="none" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <g transform="translate(-3 0)" stroke-width="2" stroke="currentColor" fill="none" fill-rule="evenodd">
-                                    <circle stroke-linecap="square" cx="11" cy="20" r="2"></circle>
-                                    <circle stroke-linecap="square" cx="22" cy="20" r="2"></circle>
-                                    <path d="M7.31 5h18.27l-1.44 10H9.78L6.22 0H0"></path>
-                                </g>
-                            </svg>
-                            <span id="contador-principal" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
-                                <span class="flex items-center justify-center w-full h-full">1</span>
-                            </span>
-                        <button/>
+                    <button id="button-carrito" type="button" class="hidden sm:block relative bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span class="absolute -inset-1.5"></span>
+                        <svg class="h-6 w-6" fill="none" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <g transform="translate(-3 0)" stroke-width="2" stroke="currentColor" fill="none" fill-rule="evenodd">
+                                <circle stroke-linecap="square" cx="11" cy="20" r="2"></circle>
+                                <circle stroke-linecap="square" cx="22" cy="20" r="2"></circle>
+                                <path d="M7.31 5h18.27l-1.44 10H9.78L6.22 0H0"></path>
+                            </g>
+                        </svg>
+                        <span id="contador-principal" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
+                            <span class="flex items-center justify-center w-full h-full">1</span>
+                        </span>
+                    <button/>
+
+                    <div id="show-carrito" class="hidden absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1">
+                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+                            <div class="flex min-h-min p-2 gap-2">
+                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
+                                <div class="w-full flex flex-col">
+                                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
+                                    <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
+                                    <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
+                                        <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
+                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg-rose-600 rounded-md">-</>
+                                        <div class="ml-auto">
+                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600">Quitar</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+                            <div class="flex min-h-min p-2 gap-2">
+                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
+                                <div class="w-full flex flex-col">
+                                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
+                                    <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
+                                    <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
+                                        <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
+                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg-rose-600 rounded-md">-</>
+                                        <div class="ml-auto">
+                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600">Quitar</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+                            <div class="flex min-h-min p-2 gap-2">
+                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
+                                <div class="w-full flex flex-col">
+                                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
+                                    <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
+                                    <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
+                                        <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
+                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg-rose-600 rounded-md">-</>
+                                        <div class="ml-auto">
+                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600">Quitar</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="relative ml-4 sm:ml-10">
                         <a href="src/html/login.html" class="hidden sm:block text-sm sm:text-base text-white font-semibold sm:font-semibold border-0 px-3 py-2 rounded-md bg-cyan-950 hover:bg-cyan-800">Iniciar Sesión</a>
                     </div>
