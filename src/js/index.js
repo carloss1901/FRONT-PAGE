@@ -8,10 +8,10 @@ const userDataString = localStorage.getItem('userData')
 const userName = localStorage.getItem('userName')
 const nm = localStorage.getItem('nm')
 
-const templateCard = document.getElementById('template-card').content
+// const templateCard = document.getElementById('template-card').content
 // const templateFooter = document.getElementById('template-footer').content
 // const templateCarrito = document.getElementById('template-carrito').content
-const templateCategory = document.getElementById('template-category').content
+// const templateCategory = document.getElementById('template-category').content
 const fragment = document.createDocumentFragment()
 
 // const carritoInfo = document.querySelector('#carrito-info')
@@ -19,9 +19,8 @@ const fragment = document.createDocumentFragment()
 // var searchForm = document.getElementById('searchForm')
 // var searchInput = document.getElementById('searchInput')
 
-const botonOpciones = document.getElementById('botonOpciones')
-const svgAbrir = document.getElementById('abrir')
-const svgCerrar = document.getElementById('cerrar')
+const svgAbrir = document.getElementById('svgAbrir')
+const svgCerrar = document.getElementById('svgCerrar')
 const mobileMenu = document.getElementById('mobile-menu')
 
 let carrito = {}
@@ -30,9 +29,14 @@ let routeCategoriasActivas = 'http://localhost:4000/api/categoria/listar/ac'
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchInitializer()
-    botonOpciones.addEventListener('click', menuUsuario)
+    console.log("EL DOM se ha cargado completamente")
 })
 
+function menuUsuario() {
+    svgAbrir.classList.toggle('hidden')
+    svgCerrar.classList.toggle('hidden')
+    mobileMenu.classList.toggle('hidden')
+}
 function agregarAnimacion() {
     const contadorP = document.getElementById('contador-principal')
     const contadorS = document.getElementById('contador-secundario')
@@ -48,11 +52,6 @@ function agregarAnimacion() {
         contadorP.classList.remove('animate-bounce')
         contadorS.classList.remove('animate-bounce')
     }, 500)
-}
-function menuUsuario() {
-    svgAbrir.classList.toggle('hidden')
-    svgCerrar.classList.toggle('hidden')
-    mobileMenu.classList.toggle('hidden')
 }
 
 const fetchData = async (ruta) => {
@@ -84,12 +83,12 @@ const fetchInitializer = async () => {
     }
 }
 
-cards.addEventListener('click', e => {
-    addCarrito(e)
-})
-items.addEventListener('click', e => {
-    btnAccion(e)
-})
+// cards.addEventListener('click', e => {
+//     addCarrito(e)
+// })
+// items.addEventListener('click', e => {
+//     btnAccion(e)
+// })
 // cart.addEventListener('click', (event) => {
 //     event.stopPropagation
 //     mostrarProductosCarrito()
@@ -444,5 +443,3 @@ function formatCurrency(amount) {
 //         mostrarProductosCarrito()
 //     }
 // })
-
-
