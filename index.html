@@ -104,9 +104,12 @@
               <a href="src/html/usuario.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Datos personales</a>
               <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Cerrar sesión</a>
             </div>
-          </div>
+        </div>
     </nav>
-    <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base sm:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
+    <!-- <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700"></section>
+    <section id="cards" class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1 sm:px-12 md:px-14 2xl:px-52"></section> -->
+
+    <section class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Soul</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Jazz</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Rock</ul>
@@ -114,7 +117,6 @@
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Blues</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Worship</ul>
     </section>
-    <!-- <section id="cards" class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1"></section> -->
     <section class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1">
         <div class="relative rounded-xl mt-1 p-1 mx-1">
             <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
@@ -147,7 +149,7 @@
                         <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">My Room</h2>
                         <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
@@ -167,7 +169,7 @@
                         <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Freedom</h2>
                         <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Andrez Babii</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
@@ -187,7 +189,7 @@
                         <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Wake Up</h2>
                         <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Terrian</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>
@@ -218,9 +220,9 @@
         </table>
     </div> -->
 
-    <template id="template-card">
+    <!-- <template id="template-card">
         <div class="relative mt-1 p-1 mx-1">
-            <div class="rounded-xl sm:rounded overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
+            <div class="rounded-xl sm:rounded overflow-hidden bg-slate-800 mx-auto sm:mx-0 max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
                 <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
                     <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="">
                     <div class="w-full flex flex-col sm:h-full">
@@ -242,10 +244,10 @@
     </template>
     <template id="template-category">
         <ul id="category-name" class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Lácteos</ul>
-    </template>
+    </template> -->
 
 
-    <!-- <template id="template-footer">
+    <template id="template-footer">
         <th scope="row" colspan="2">Total productos</th>
         <td>10</td>
         <td>
@@ -275,7 +277,7 @@
                 </button>
             </td>
         </tr>
-    </template> -->
+    </template>
     <!-- <header>
         <div class="header-wrapper">
           <div class="logo" id="logo">Inicio</div>
