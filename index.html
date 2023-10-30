@@ -23,6 +23,9 @@
         #button-card:hover {
             background-color: #c56259;
         }
+        #button-card:active {
+            transform: translateY(-8px)
+        }
         #ir-carrito {
             background-color: #bd544a;
         }
@@ -84,9 +87,9 @@
                     </button>
 
                     <div id="show-carrito" class="absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1 z-10">
-                        <h2 class="hidden text-lg bg-gray-100 w-56">Carrito vacío . _.</h2>
+                        <h2 class="text-lg bg-gray-100 w-56 font-bold">Carrito vacío . _.</h2>
                         <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
-                            <div class="flex min-h-min p-2 gap-2">
+                            <div class="hidden flex min-h-min p-2 gap-2">
                                 <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
                                 <div class="w-full flex flex-col">
                                     <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
@@ -103,7 +106,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+                        <div class="hidden rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
                             <div class="flex min-h-min p-2 gap-2">
                                 <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
                                 <div class="w-full flex flex-col">
@@ -282,7 +285,7 @@
                         <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Your Soul</h2>
                         <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
                         <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
+                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1 animate-jump">
                                 Agregar
                                 <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
                             </button>

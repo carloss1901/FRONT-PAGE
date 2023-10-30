@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/carloss1901/FRONT-VIC#readme",
   "devDependencies": {
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "tailwindcss-animated": "^1.0.1"
   }
 }
