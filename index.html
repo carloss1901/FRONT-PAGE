@@ -23,6 +23,12 @@
         #button-card:hover {
             background-color: #c56259;
         }
+        #ir-carrito {
+            background-color: #bd544a;
+        }
+        #ir-carrito:hover {
+            background-color: #c56259;
+        }
     </style>
 </head>
 <body class="bg-slate-700">
@@ -75,56 +81,49 @@
                         <span id="contador-principal" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
                             <span class="flex items-center justify-center w-full h-full">1</span>
                         </span>
-                    <button/>
+                    </button>
 
-                    <div id="show-carrito" class="hidden absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1 z-10">
-                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+                    <div id="show-carrito" class="absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1 z-10">
+                        <h2 class="text-lg bg-gray-100 w-56">Carrito vacío . _.</h2>
+                        <div class="hidden rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
                             <div class="flex min-h-min p-2 gap-2">
                                 <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
                                 <div class="w-full flex flex-col">
                                     <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
                                     <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
-                                    <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
-                                        <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
-                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg--400 rounded-md">-</>
-                                        <div class="ml-auto">
-                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600 rounded-md py-1">Quitar</span>
+                                    <div class="flex gap-2 mt-auto pt-1 justify-between">
+                                        <div class="mt-1 flex gap-2">
+                                            <button class="text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
+                                            <button class="text-white font-semibold px-2 bg-rose-700 hover:bg-rose-600 rounded-md">-</button>
+                                        </div>
+                                        <div>
+                                            <button class="text-white text-sm font-semibold px-2 bg-indigo-700 hover:bg-indigo-600 rounded-md py-1">Quitar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+                        <div class="hidden rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
                             <div class="flex min-h-min p-2 gap-2">
-                                <img class="h-20 w-20" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF9F-_zQFz8dii9OYqgVqgd2BPVNrZ2Lv9cVf8E7ra2zeko6jqHpodhcy_I6IJesfP8u0&usqp=CAU">
+                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
                                 <div class="w-full flex flex-col">
                                     <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
                                     <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
-                                    <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
-                                        <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
-                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg--400 rounded-md">-</>
-                                        <div class="ml-auto">
-                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600 rounded-md py-1">Quitar</span>
+                                    <div class="flex gap-2 mt-auto pt-1 justify-between">
+                                        <div class="mt-1 flex gap-2">
+                                            <button class="text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
+                                            <button class="text-white font-semibold px-2 bg-rose-700 hover:bg-rose-600 rounded-md">-</button>
+                                        </div>
+                                        <div>
+                                            <button class="text-white text-sm font-semibold px-2 bg-indigo-700 hover:bg-indigo-600 rounded-md py-1">Quitar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
-                            <div class="flex min-h-min p-2 gap-2">
-                                <img class="h-20 w-20" src="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/de/a4/ba/dea4ba3e-8624-b8c9-16cc-b812951bd511/5054197199202.jpg/1200x630bb.jpg">
-                                <div class="w-full flex flex-col">
-                                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
-                                    <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
-                                    <div class="flex gap-2 mt-auto justify-between pt-1 mr-auto w-full">
-                                        <p class="text-white text-sm font-bold px-2 bg-sky-700 cursor-pointer hover:bg-sky-600 rounded-md">+</>
-                                        <p class="text-white text-sm font-bold px-2 bg-rose-700 cursor-pointer hover:bg--400 rounded-md">-</>
-                                        <div class="ml-auto">
-                                            <span class="text-white text-sm font-semibold px-2 bg-indigo-700 cursor-pointer hover:bg-indigo-600 rounded-md py-1">Quitar</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="flex justify-between bg-white bg-opacity-30 backdrop-blur-lg rounded-md mt-1">
+                            <p id="total-carrito" class="font-bold p-1 text-lg">S/. 10.00</p>
+                            <a id="ir-carrito" href="src/html/carrito.html" class="font-semibold bg-blue-500 text-white rounded-md py-1 px-2 transition">Ver carrito</a>
                         </div>
                     </div>
 
