@@ -66,7 +66,7 @@
                             </g>
                         </svg>
                         <span id="contador-secundario" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
-                            <span class="flex items-center justify-center w-full h-full">1</span>
+                            <span class="flex items-center justify-center w-full h-full">0</span>
                         </span>
                     <a/>
                 </div>
@@ -82,52 +82,18 @@
                             </g>
                         </svg>
                         <span id="contador-principal" class="absolute -top-2 right-0 -mr-3 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-sm font-semibold">
-                            <span class="flex items-center justify-center w-full h-full">1</span>
+                            <span class="flex items-center justify-center w-full h-full">0</span>
                         </span>
                     </button>
 
-                    <div id="show-carrito" class="absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1 z-10">
-                        <h2 class="text-lg bg-gray-100 w-56 font-bold">Carrito vacío . _.</h2>
-                        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
-                            <div class="hidden flex min-h-min p-2 gap-2">
-                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
-                                <div class="w-full flex flex-col">
-                                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
-                                    <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
-                                    <div class="flex gap-2 mt-auto pt-1 justify-between">
-                                        <div class="mt-1 flex gap-2">
-                                            <button class="text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
-                                            <button class="text-white font-semibold px-2 bg-rose-700 hover:bg-rose-600 rounded-md">-</button>
-                                        </div>
-                                        <div>
-                                            <button class="text-white text-sm font-semibold px-2 bg-indigo-700 hover:bg-indigo-600 rounded-md py-1">Quitar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hidden rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
-                            <div class="flex min-h-min p-2 gap-2">
-                                <img class="h-20 w-20" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg">
-                                <div class="w-full flex flex-col">
-                                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto">Chocolate Donofrio 800gr</h2>
-                                    <p id="price-card" class="mt-1 text-green-600 text-sm font-semibold mr-auto">Forrest Frank</p>
-                                    <div class="flex gap-2 mt-auto pt-1 justify-between">
-                                        <div class="mt-1 flex gap-2">
-                                            <button class="text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
-                                            <button class="text-white font-semibold px-2 bg-rose-700 hover:bg-rose-600 rounded-md">-</button>
-                                        </div>
-                                        <div>
-                                            <button class="text-white text-sm font-semibold px-2 bg-indigo-700 hover:bg-indigo-600 rounded-md py-1">Quitar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between bg-white bg-opacity-30 backdrop-blur-lg rounded-md mt-1">
+                    <div id="show-carrito" class="hidden absolute fixed right-32 top-14 bg-slate-500 bg-opacity-30 backdrop-blur-lg px-1 pb-1 z-10">
+                        <div id="producto-carrito"></div>
+                        <h2 id="carrito-vacio" class="hidden text-lg bg-gray-100 w-56 font-bold">Carrito vacío . _.</h2>
+                        <div id="producto-footer-carrito"></div>
+                        <!-- <div class="flex justify-between bg-white bg-opacity-30 backdrop-blur-lg rounded-md mt-1">
                             <p id="total-carrito" class="font-bold p-1 text-lg">S/. 10.00</p>
                             <a id="ir-carrito" href="src/html/carrito.html" class="font-semibold bg-blue-500 text-white rounded-md py-1 px-2 transition">Ver carrito</a>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="relative ml-4 sm:ml-10">
@@ -160,10 +126,10 @@
             </div>
         </div>
     </nav>
-    <!-- <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700"></section> -->
+    <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700"></section> 
     <section id="cards" class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1 sm:px-12 md:px-14 2xl:px-52"></section>
 
-    <section class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
+    <!-- <section class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Soul</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Jazz</ul>
         <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Rock</ul>
@@ -252,9 +218,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <div class="hidden"> 
+    <div class=""> 
         <table class="table">
             <thead id>
                 <tr>
@@ -298,6 +264,35 @@
     <template id="template-category">
         <ul id="category-name" class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Lácteos</ul>
     </template>
+    <template id="template-producto-carrito">
+        <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md mt-1">
+            <div class="flex min-h-min p-2 gap-2">
+                <img class="h-24 w-24 rounded-md" src="">
+                <div class="w-full flex flex-col">
+                    <h2 id="title-card" class="text-white text-sm font-semibold mr-auto"></h2>
+                    <div class="flex justify-between mt-3">
+                        <p class="text-white text-sm">Cantidad: <span id="cantidad-producto">1</span></p>
+                        <p id="price-total" class="text-green-600 text-sm font-bold"></p>
+                    </div>
+                    <div class="flex gap-2 mt-auto justify-between">
+                        <div class="flex gap-2">
+                            <button id="sumar" class="btn-info text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
+                            <button id="restar" class="btn-danger text-white font-semibold px-2 bg-rose-700 hover:bg-rose-600 rounded-md">-</button>
+                        </div>
+                        <div>
+                            <button id="quitar" class="btn-trash text-white text-sm font-semibold px-2 bg-indigo-700 hover:bg-indigo-600 rounded-md py-1">Quitar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="template-footer-carrito">
+        <div class="flex justify-between bg-white bg-opacity-30 backdrop-blur-lg rounded-md mt-1">
+            <p id="total-carrito" class="font-bold p-1 text-lg">S/. 10.00</p>
+            <a id="ir-carrito" href="src/html/carrito.html" class="font-semibold bg-blue-500 text-white rounded-md py-1 px-2 transition">Ver carrito</a>
+        </div>
+    </template>
 
 
     <template id="template-footer">
@@ -311,21 +306,21 @@
         <td class="font-weight-bold bg-indigo-300">S/. <span>5000</span></td>
     </template>
     <template id="template-carrito">
-        <tr class="bg-gray-400">
+        <tr>
             <th scope="row">id</th>
             <td>Café</td>
             <td>1</td>
             <td>
-                <button id="sumar" class="btn btn-info btn-sm bg-blue-500">
+                <button id="btn-sumar" class="btn btn-info btn-sm">
                     +
                 </button>
-                <button id="restar" class="btn btn-danger btn-sm bg-indigo-500">
+                <button id="btn-restar" class="btn btn-danger btn-sm">
                     -
                 </button>
             </td>
             <td>S/. <span>500</span></td>
             <td>
-                <button id="quitar" class="btn btn-danger btn-sm">
+                <button id="btn-quitar" class="btn btn-trash btn-sm">
                     Quitar
                 </button>
             </td>

@@ -3,13 +3,22 @@ const items = document.getElementById('items')
 const footer = document.getElementById('footer')
 const cart = document.getElementById('cart')
 const categorias = document.getElementById('categorias')
+const showCarrito = document.getElementById('show-carrito')
+const productoCarrito = document.getElementById('producto-carrito')
+const productoFooterCarrito = document.getElementById('producto-footer-carrito')
+const contadorCarrito = document.getElementById('contador-carrito')
 
 const svgAbrir = document.getElementById('svgAbrir')
 const svgCerrar = document.getElementById('svgCerrar')
 const mobileMenu = document.getElementById('mobile-menu')
 
 const buttonCarrito = document.getElementById('button-carrito')
-const showCarrito = document.getElementById('show-carrito')
+const btnSumar = document.getElementById('btn-sumar')
+const btnRestar = document.getElementById('btn-restar')
+const btnQuitar = document.getElementById('btn-quitar')
+const contadorP = document.getElementById('contador-principal')
+const contadorS = document.getElementById('contador-secundario')
+const carritoVacio = document.getElementById('carrito-vacio')
 
 const userDataString = localStorage.getItem('userData')
 const userName = localStorage.getItem('userName')
@@ -19,10 +28,10 @@ const templateCard = document.getElementById('template-card').content
 const templateFooter = document.getElementById('template-footer').content
 const templateCarrito = document.getElementById('template-carrito').content
 const templateCategory = document.getElementById('template-category').content
+const templateProductoCarrito = document.getElementById('template-producto-carrito').content
+const templateFooterCarrito = document.getElementById('template-footer-carrito').content
 const fragment = document.createDocumentFragment()
 
-// const carritoInfo = document.querySelector('#carrito-info')
-// const cartCountElement = document.getElementById('cart-count')
 // var searchForm = document.getElementById('searchForm')
 // var searchInput = document.getElementById('searchInput')
 
@@ -30,43 +39,6 @@ let carrito = {}
 let routeProductosRecomendados = 'http://localhost:4000/api/producto/listar/recomendado'
 let routeCategoriasActivas = 'http://localhost:4000/api/categoria/listar/ac'
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchInitializer()
-    console.log("EL DOM se ha cargado completamente")
-})
-
-function menuUsuario() {
-    svgAbrir.classList.toggle('hidden')
-    svgCerrar.classList.toggle('hidden')
-    mobileMenu.classList.toggle('hidden')
-}
-function agregarAnimacion() {
-    const contadorP = document.getElementById('contador-principal')
-    const contadorS = document.getElementById('contador-secundario')
-    contadorP.classList.add('animate-bounce')
-    contadorS.classList.add('animate-bounce')
-    let numeroActualP = parseInt(contadorP.textContent, 10)
-    let numeroActualS = parseInt(contadorS.textContent, 10)
-        numeroActualP += 1
-        numeroActualS += 1
-        contadorP.textContent = numeroActualP
-        contadorS.textContent = numeroActualS
-    setTimeout(() => {
-        contadorP.classList.remove('animate-bounce')
-        contadorS.classList.remove('animate-bounce')
-    }, 500)
-}
-
-const fetchData = async (ruta) => {
-    try {
-        const res = await fetch(ruta)
-        const data = await res.json()
-        return data
-        // cards.innerHTML = ''
-    } catch (error) {
-        console.log(error)
-    }
-}
 const fetchInitializer = async () => {
     try {
         const [productosData, categoriasData] = await Promise.all([
@@ -80,7 +52,37 @@ const fetchInitializer = async () => {
         if(localStorage.getItem('carrito')) {
             carrito = JSON.parse(localStorage.getItem('carrito'))
             pintarCarrito()
+            pintarProductoCarrito()
         }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchInitializer()
+    console.log("EL DOM se ha cargado completamente")
+})
+
+function menuUsuario() {
+    svgAbrir.classList.toggle('hidden')
+    svgCerrar.classList.toggle('hidden')
+    mobileMenu.classList.toggle('hidden')
+}
+function agregarAnimacion() {
+    contadorP.classList.add('animate-bounce')
+    contadorS.classList.add('animate-bounce')
+    setTimeout(() => {
+        contadorP.classList.remove('animate-bounce')
+        contadorS.classList.remove('animate-bounce')
+    }, 500)
+}
+
+const fetchData = async (ruta) => {
+    try {
+        const res = await fetch(ruta)
+        const data = await res.json()
+        return data
     } catch (error) {
         console.log(error)
     }
@@ -90,6 +92,9 @@ cards.addEventListener('click', e => {
     addCarrito(e)
 })
 items.addEventListener('click', e => {
+    btnAccion(e)
+})
+productoCarrito.addEventListener('click', e => {
     btnAccion(e)
 })
 buttonCarrito.addEventListener('click', () => {
@@ -126,7 +131,7 @@ const pintarCategories = data => {
 
         uElement.addEventListener('click', () => {
             const categoriaId = uElement.dataset.id
-            console.log(categoriaId)
+            //console.log(categoriaId)
         })
         fragment.appendChild(clone)
     })
@@ -146,16 +151,9 @@ const pintarCards = data => {
 }
 
 const addCarrito = e => {
-    // (e.target.classList.contains('.btn-dark')
     if(e.target.id === 'button-card') { 
         const templateDiv = e.target.closest('.relative')
         setCarrito(templateDiv)
-
-        // setCarrito(e.target.parentElement)
-        // notificacionConfirmacion()
-        // if(carritoInfo.style.display == 'block') {
-        //     mostrarProductosCarrito()
-        // }
     }
     e.stopPropagation()
 }
@@ -174,37 +172,74 @@ const setCarrito = objeto => {
     }
     
     carrito[producto.id] = {...producto}
+
     pintarCarrito()
+    pintarProductoCarrito()
 }
 
 const pintarCarrito = () => {
     items.innerHTML = ''
-    // let cartCount = 0;
     Object.values(carrito).forEach(producto => {
         templateCarrito.querySelector('th').textContent = producto.id
         templateCarrito.querySelectorAll('td')[0].textContent = producto.title
         templateCarrito.querySelectorAll('td')[1].textContent = producto.cantidad
         templateCarrito.querySelector('.btn-info').dataset.id = producto.id
         templateCarrito.querySelector('.btn-danger').dataset.id = producto.id
+        templateCarrito.querySelector('.btn-trash').dataset.id = producto.id
         templateCarrito.querySelector('span').textContent = producto.cantidad * producto.precio
 
         const clone = templateCarrito.cloneNode(true)
         fragment.appendChild(clone)
-
-        // cartCount += 1;
     })
+
     items.appendChild(fragment)
     pintarFooter()
 
     localStorage.setItem('carrito', JSON.stringify(carrito))
-
-    // if(Object.keys(carrito).length === 0) {
-    //     cartCount = 0;
-    // }
-
-    // cartCountElement.textContent = cartCount
 } 
+const pintarProductoCarrito = () => {
+    productoCarrito.innerHTML = ''
+    Object.values(carrito).forEach(producto => {
+        templateProductoCarrito.querySelector('img').setAttribute("src", producto.img)
+        templateProductoCarrito.querySelector('#title-card').textContent = producto.title
+        templateProductoCarrito.querySelector('#cantidad-producto').textContent = producto.cantidad
+        templateProductoCarrito.querySelector('#price-total').textContent = formatCurrency(producto.precio * producto.cantidad)
+        templateProductoCarrito.querySelector('#sumar').dataset.id = producto.id
+        templateProductoCarrito.querySelector('#restar').dataset.id = producto.id
+        templateProductoCarrito.querySelector('#quitar').dataset.id = producto.id
 
+        const clone = templateProductoCarrito.cloneNode(true)
+        fragment.appendChild(clone)
+    })
+    productoCarrito.appendChild(fragment)
+    pintarFooterCarrito()
+    
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+
+    if(Object.keys(carrito).length === 0) {
+        productoCarrito.classList.add('hidden')
+        carritoVacio.classList.remove('hidden')
+    } else {
+        productoCarrito.classList.remove('hidden')
+        carritoVacio.classList.add('hidden')
+    }
+}
+const pintarFooterCarrito = () => {
+    productoFooterCarrito.innerHTML = ''
+    contadorP.innerHTML = ''
+    contadorS.innerHTML = ''
+
+    const nPrecio = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio,0)
+    const nCantidad = Object.values(carrito).reduce((acc, {cantidad}) => acc + cantidad,0)
+
+    templateFooterCarrito.querySelector('#total-carrito').textContent = formatCurrency(nPrecio)
+    contadorP.textContent = nCantidad
+    contadorS.textContent = nCantidad
+
+    const clone = templateFooterCarrito.cloneNode(true)
+    fragment.appendChild(clone)
+    productoFooterCarrito.appendChild(fragment)
+}
 const pintarFooter = () => {
     footer.innerHTML = ''
     if(Object.keys(carrito).length === 0) {
@@ -228,6 +263,7 @@ const pintarFooter = () => {
     btnVaciar.addEventListener('click', () => {
         carrito = {}
         pintarCarrito()
+        pintarProductoCarrito()
     })
 }
 
@@ -238,6 +274,7 @@ const btnAccion = e => {
         const producto = carrito[e.target.dataset.id]
         producto.cantidad++
         carrito[e.target.dataset.id] = {...producto}
+        pintarProductoCarrito()
         pintarCarrito()
     }
 
@@ -249,16 +286,17 @@ const btnAccion = e => {
             delete carrito[e.target.dataset.id]
             // notificacionConfirmacion()
         }
+        pintarProductoCarrito()
         pintarCarrito()
     }
 
-    // if(e.target.classList.contains('btn-trash')) {
-    //     const producto = carrito[e.target.dataset.id];
-    //     delete carrito[producto.id];
-    //     pintarCarrito();
-    //     notificacionConfirmacion2()
-    // }
-
+    if(e.target.classList.contains('btn-trash')) {
+        const producto = carrito[e.target.dataset.id]
+        delete carrito[producto.id]
+        pintarCarrito()
+        pintarProductoCarrito()
+        // notificacionConfirmacion2()
+    }
     e.stopPropagation()
 }
 
