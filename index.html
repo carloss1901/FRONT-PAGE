@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-    <!-- <link rel="stylesheet" href="/src/css/estilos.css"> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
@@ -90,19 +89,30 @@
                         <div id="producto-carrito"></div>
                         <h2 id="carrito-vacio" class="hidden text-lg bg-gray-100 w-56 font-bold">Carrito vacío . _.</h2>
                         <div id="producto-footer-carrito"></div>
-                        <!-- <div class="flex justify-between bg-white bg-opacity-30 backdrop-blur-lg rounded-md mt-1">
-                            <p id="total-carrito" class="font-bold p-1 text-lg">S/. 10.00</p>
-                            <a id="ir-carrito" href="src/html/carrito.html" class="font-semibold bg-blue-500 text-white rounded-md py-1 px-2 transition">Ver carrito</a>
-                        </div> -->
                     </div>
-
                     <div class="relative ml-4 sm:ml-10">
-                        <a href="src/html/login.html" class="hidden sm:block text-sm sm:text-base text-white font-semibold sm:font-semibold border-0 px-3 py-2 rounded-md bg-cyan-950 hover:bg-cyan-800">Iniciar Sesión</a>
+                        <a id="loguinIndex" href="src/html/login.html" class="hidden sm:block text-sm sm:text-base text-white font-semibold sm:font-semibold border-0 px-3 py-2 rounded-md bg-cyan-950 hover:bg-cyan-800">Iniciar Sesión</a>
+                        
+                        <button id="botonOpcionesIndex" onclick="menuUsuarioIndex()" class="hidden relative z-10 flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="absolute -inset-0.5"></span>
+                            <span class="sr-only">Open</span>
+                            <svg id="svgAbrirIndex" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                            <svg id="svgCerrarIndex" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div id="opcionesIndex" class="hidden absolute mt-2 w-48 z-10 bg-gray-800 rounded-md p-2 right-0 origin-top-right">
+                            <a href="src/html/misPedidos.html" class="text-gray-300 hover:bg-gray-700 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Pedidos</a>
+                            <a href="src/html/usuario.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Mis datos</a>
+                            <button onclick="cerrarSesion()" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium text-left w-full">Cerrar sesión</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
-                    <button id="botonOpciones" onclick="menuUsuario()" class="relative flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400" aria-controls="mobile-menu" aria-expanded="false">
+                <div class="absolute inset-y-0 right-0 flex items-center">
+                    <button id="botonOpciones" onclick="menuUsuario()" class="hidden relative sm:hidden flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="absolute -inset-0.5"></span>
                         <span class="sr-only">Open</span>
                         <svg id="svgAbrir" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -112,8 +122,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-                    <div class="hidden relative ml-4 sm:ml-10">
-                        <a href="src/html/login.html" class="sm:block text-sm sm:text-base text-white font-semibold sm:font-semibold border-0 px-3 py-2 rounded-md bg-cyan-950 hover:bg-cyan-800">Iniciar Sesión</a>
+                    <div class="relative ml-4 sm:ml-10">
+                        <a id="loguin" href="src/html/login.html" class="text-sm sm:text-base text-white font-semibold sm:font-semibold border-0 px-3 py-2 rounded-md bg-cyan-950 hover:bg-cyan-800">Iniciar Sesión</a>
                     </div>
                 </div>
             </div>
@@ -122,105 +132,14 @@
             <div class="space-y-1 px-2 pb-3 pt-2">
               <a href="src/html/misPedidos.html" class="text-gray-300 hover:bg-gray-700 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Pedidos</a>
               <a href="src/html/usuario.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Datos personales</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Cerrar sesión</a>
+              <button onclick="cerrarSesion()" class="text-gray-300 hover:bg-gray-700 hover:text-white text-left block rounded-md px-3 py-2 text-base font-medium w-full">Cerrar sesión</button>
             </div>
         </div>
     </nav>
     <section id="categorias" class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700"></section> 
     <section id="cards" class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1 sm:px-12 md:px-14 2xl:px-52"></section>
 
-    <!-- <section class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:gap-6 py-3 mt-2 mb-2 mx-2 sm:mb-2 md:mt-3 md:mb-2 text-base md:text-lg md:text-xl text-gray-300 font-semibold bg-gradient-to-r from-slate-700 via-blue-800 to-slate-700">
-        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Soul</ul>
-        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Jazz</ul>
-        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Rock</ul>
-        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Pop</ul>
-        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Blues</ul>
-        <ul class="cursor-pointer md:hover:scale-110 ease-in-out duration-150">Worship</ul>
-    </section>
-    <section class="sm:flex sm:flex-wrap sm:justify-center sm:gap-1">
-        <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
-                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://i1.sndcdn.com/artworks-000355508676-lwelho-t500x500.jpg" alt="">
-                    <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
-                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
-                        </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Your Soul</h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
-                                Agregar
-                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
-                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF9F-_zQFz8dii9OYqgVqgd2BPVNrZ2Lv9cVf8E7ra2zeko6jqHpodhcy_I6IJesfP8u0&usqp=CAU" alt="">
-                    <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
-                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
-                        </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">My Room</h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Forrest Frank</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
-                                Agregar
-                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
-                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/de/a4/ba/dea4ba3e-8624-b8c9-16cc-b812951bd511/5054197199202.jpg/1200x630bb.jpg" alt="">
-                    <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
-                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
-                        </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Freedom</h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Andrez Babii</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
-                                Agregar
-                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="relative rounded-xl mt-1 p-1 mx-1">
-            <div class="rounded-xl overflow-hidden bg-slate-800 mx-auto max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
-                <div class="flex min-h-min p-2 gap-2 sm:flex-col sm:p-2 sm:h-full">
-                    <img class="h-24 w-24 sm:h-36 sm:w-full sm:object-cover lg:h-44 lg:w-52 rounded-md sm:mx-auto lg:h-44 lg:w-52 sm:mt-1" src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/31/90/aa/3190aa29-17f6-f881-0fac-01e172a0cd09/dj.wrjcwkhr.png/1200x1200bf-60.jpg" alt="">
-                    <div class="w-full flex flex-col sm:h-full">
-                        <div class="hidden sm:block sm:mt-1 sm:mb-2">
-                            <span class="sm:inline-block bg-gray-500 rounded-full px-3 py-1 text-gray-200 text-xs font-semibold">#Recomendado</span>
-                        </div>
-                        <h2 id="title-card" class="text-white text-sm sm:text-base lg:text-lg font-semibold sm:font-semibold sm:mb-1 sm:h-auto">Wake Up</h2>
-                        <p id="price-card" class="mt-1 text-green-600 text-sm sm:text-base lg:text-lg sm:mt-1 sm:text-green-600 font-semibold tracking-wider">Terrian</p>
-                        <div class="mt-auto justify-between pt-1 sm:pt-0 sm:mb-1 sm:h-auto">
-                            <button id="button-card" onclick="agregarAnimacion()" class="flex ml-auto items-center text-gray-300 font-semibold font-sm rounded-md p-1 px-2 text-sm sm:text-sm sm:px-2 lg:text-base tracking-wider transition gap-1">
-                                Agregar
-                                <img class="h-5 w-6" src="/src/img/carrito.svg" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <div class=""> 
+    <div class="hidden"> 
         <table class="table">
             <thead id>
                 <tr>
@@ -239,6 +158,7 @@
             </tfoot>
         </table>
     </div>
+
     <template id="template-card">
         <div class="relative mt-1 p-1 mx-1">
             <div class="rounded-xl sm:rounded overflow-hidden bg-slate-800 mx-auto sm:mx-0 max-w-md sm:flex sm:flex-col sm:w-56 sm:h-80 lg:w-56 lg:h-96">
@@ -276,8 +196,8 @@
                     </div>
                     <div class="flex gap-2 mt-auto justify-between">
                         <div class="flex gap-2">
-                            <button id="sumar" class="btn-info text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
                             <button id="restar" class="btn-danger text-white font-semibold px-2 bg-rose-700 hover:bg-rose-600 rounded-md">-</button>
+                            <button id="sumar" class="btn-info text-white font-semibold px-2 bg-sky-700 hover:bg-sky-600 rounded-md">+</button>
                         </div>
                         <div>
                             <button id="quitar" class="btn-trash text-white text-sm font-semibold px-2 bg-indigo-700 hover:bg-indigo-600 rounded-md py-1">Quitar</button>
@@ -293,8 +213,6 @@
             <a id="ir-carrito" href="src/html/carrito.html" class="font-semibold bg-blue-500 text-white rounded-md py-1 px-2 transition">Ver carrito</a>
         </div>
     </template>
-
-
     <template id="template-footer">
         <th scope="row" colspan="2">Total productos</th>
         <td>10</td>
@@ -326,127 +244,8 @@
             </td>
         </tr>
     </template>
-    <!-- <header>
-        <div class="header-wrapper">
-          <div class="logo" id="logo">Inicio</div>
-          <div class="search-form">
-            <input type="text" id="searchInput" placeholder="Buscar...">
-            <button id="buscar">Buscar</button>
-          </div>
-          <div class="cart" id="cart">
-            <i class="fa fa-shopping-cart"></i>
-            <span class="cart-label">Carrito</span>
-            <span class="cart-count" id="cart-count">0</span>
-            <div class="header__cart-icon icon-state" aria-expanded="false">
-                <span class="icon-state__primary">
-                    <svg focusable="false" class="icon icon--cart " viewBox="0 0 27 24" role="presentation">
-                        <g transform="translate(0 1)" stroke-width="2" stroke="currentColor" fill="none" fill-rule="evenodd">
-                        <circle stroke-linecap="square" cx="11" cy="20" r="2"></circle>
-                        <circle stroke-linecap="square" cx="22" cy="20" r="2"></circle>
-                        <path d="M7.31 5h18.27l-1.44 10H9.78L6.22 0H0"></path>
-                        </g>
-                    </svg>
-                </span>
-              </div>
-          </div>
-          <div id="carrito-info"></div>
-          <div class="login" id="login">Iniciar sesión</div>
-          <div class="user-menu" id="user-menu">
-            <div class="welcome-wrapper">
-              <span class="welcome-message">Bienvenido</span>
-              <div class="menu-icon-wrapper" id="menu-icon-wrapper">
-                <span class="menu-icon">&#9776;</span>
-              </div>
-            </div>
-        </div>
-        <div id="usuario-opciones">
-            <button id="mis-pedidos">Mis Pedidos</button>
-            <br>
-            <button id="mis-datos">Mis Datos</button>
-            <br>
-            <button id="logout">Cerrar Sesión</button>
-        </div>
-    </header>
 
-    <div class="container" id="containerCategorias">
-        <div class="categorias-wrapper">
-          <ul id="categorias"></ul>
-        </div>
-      </div> -->
-    <!-- <template id="template-card">
-        <div    >
-            <div class="card">
-                <img src="" alt="" class="card-img-top">
-                <div class="card-body">
-                    <h5 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Titulo</h5>
-                    <p style="font-size: 18px; font-weight: 550; font-family: 'Arial', sans-serif;">precio</p>
-                    <button id="btn-add-to-cart" class="btn btn-dark">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                          </svg>
-                        Añadir al carrito
-                    </button>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <div class="container">
-        <table class="table">
-            <thead id>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Acción</th>
-                    <th scope="col">Total</th>
-                </tr>
-            </thead>
-            <tbody id="items"></tbody>
-            <tfoot>
-                <tr id="footer">
-                    <th scope="row" colspan="5">Carrito vacío - Comience a comprar!</th>
-                </tr>
-            </tfoot>
-        </table>
-        <hr>
-        <div class="row" id="cards"></div>
-    </div>
-
-    <template id="template-footer">
-        <th scope="row" colspan="2">Total productos</th>
-        <td>10</td>
-        <td>
-            <button class="btn btn-danger btn-sm" id="vaciar-carrito">
-                vaciar todo
-            </button>
-        </td>
-        <td class="font-weight-bold">S/. <span>5000</span></td>
-    </template>
-
-    <template id="template-carrito">
-        <tr>
-            <th scope="row">id</th>
-            <td>Café</td>
-            <td>1</td>
-            <td>
-                <button class="btn btn-info btn-sm">
-                    +
-                </button>
-                <button class="btn btn-danger btn-sm">
-                    -
-                </button>
-            </td>
-            <td>S/. <span>500</span></td>
-            <td>
-                <button class="btn btn-danger btn-sm">
-                    Quitar
-                </button>
-            </td>
-        </tr>
-    </template>
-
-    <script src="src/js/carrito.js"></script>
+    <!-- <script src="src/js/carrito.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="src/js/index.js"></script>
 </body>

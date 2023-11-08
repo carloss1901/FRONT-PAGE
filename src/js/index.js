@@ -11,6 +11,13 @@ const contadorCarrito = document.getElementById('contador-carrito')
 const svgAbrir = document.getElementById('svgAbrir')
 const svgCerrar = document.getElementById('svgCerrar')
 const mobileMenu = document.getElementById('mobile-menu')
+const svgAbrirIndex = document.getElementById('svgAbrirIndex')
+const svgCerrarIndex = document.getElementById('svgCerrarIndex')
+const opcionesIndex = document.getElementById('opcionesIndex')
+const botonOpciones = document.getElementById('botonOpciones')
+const loguin = document.getElementById('loguin')
+const loguinIndex = document.getElementById('loguinIndex')
+const botonOpcionesIndex = document.getElementById('botonOpcionesIndex')
 
 const buttonCarrito = document.getElementById('button-carrito')
 const btnSumar = document.getElementById('btn-sumar')
@@ -30,14 +37,13 @@ const templateCarrito = document.getElementById('template-carrito').content
 const templateCategory = document.getElementById('template-category').content
 const templateProductoCarrito = document.getElementById('template-producto-carrito').content
 const templateFooterCarrito = document.getElementById('template-footer-carrito').content
-const fragment = document.createDocumentFragment()
 
-// var searchForm = document.getElementById('searchForm')
-// var searchInput = document.getElementById('searchInput')
+const fragment = document.createDocumentFragment()
 
 let carrito = {}
 let routeProductosRecomendados = 'http://localhost:4000/api/producto/listar/recomendado'
 let routeCategoriasActivas = 'http://localhost:4000/api/categoria/listar/ac'
+let routeProductosPorCategoria = 'http://localhost:4000/api/producto/listar/categoria'
 
 const fetchInitializer = async () => {
     try {
@@ -54,6 +60,13 @@ const fetchInitializer = async () => {
             pintarCarrito()
             pintarProductoCarrito()
         }
+        if(localStorage.getItem('uI') && localStorage.getItem('ps')) {
+            loguinIndex.classList.toggle('sm:hidden')
+            loguin.classList.toggle('hidden')
+            botonOpcionesIndex.classList.toggle('sm:block')
+            botonOpciones.classList.toggle('hidden')
+            showCarrito.classList.toggle('right-20')
+        }
     } catch (error) {
         console.log(error)
     }
@@ -69,6 +82,11 @@ function menuUsuario() {
     svgCerrar.classList.toggle('hidden')
     mobileMenu.classList.toggle('hidden')
 }
+function menuUsuarioIndex() {
+    svgAbrirIndex.classList.toggle('hidden')
+    svgCerrarIndex.classList.toggle('hidden')
+    opcionesIndex.classList.toggle('hidden')
+}
 function agregarAnimacion() {
     contadorP.classList.add('animate-bounce')
     contadorS.classList.add('animate-bounce')
@@ -76,6 +94,12 @@ function agregarAnimacion() {
         contadorP.classList.remove('animate-bounce')
         contadorS.classList.remove('animate-bounce')
     }, 500)
+}
+function cerrarSesion() {
+    localStorage.removeItem('uI')
+    localStorage.removeItem('ps')
+    localStorage.removeItem('nm')
+    location.reload()
 }
 
 const fetchData = async (ruta) => {
@@ -100,39 +124,23 @@ productoCarrito.addEventListener('click', e => {
 buttonCarrito.addEventListener('click', () => {
     showCarrito.classList.toggle('hidden')
 })
-// cart.addEventListener('click', (event) => {
-//     event.stopPropagation
-//     mostrarProductosCarrito()
-// })
-// fetch(routeCategoriasActivas)
-// .then(response => response.json())
-// .then(data => {
-//     const categorias = document.querySelector('#categorias');
-//     data.forEach(categoria => {
-//         const li = document.createElement('li');
-//         li.textContent = categoria.nombre;
-//         li.setAttribute('data-id', categoria.id_categoria);
-//         categorias.appendChild(li);
-//         li.addEventListener('click', () => {
-//             const idCategoria = li.getAttribute('data-id')
-//             fetchData(`http://localhost:8080/producto/listar/categoria/${idCategoria}`)
-//         })
-//     });
-// })
-// .catch(error => console.error(error));
 
 const pintarCategories = data => {
     data.forEach(categoria => {
+        
         const clone = templateCategory.cloneNode(true)
         const uElement = clone.querySelector('#category-name')
 
         uElement.textContent = categoria.nombre
         uElement.dataset.id = categoria.id_categoria
 
-        uElement.addEventListener('click', () => {
+        uElement.addEventListener('click', async () => {
+            cards.innerHTML = ''
             const categoriaId = uElement.dataset.id
-            //console.log(categoriaId)
+            const productoCatData = await fetchData(routeProductosPorCategoria + `/${categoriaId}`)
+            pintarCards(productoCatData)
         })
+
         fragment.appendChild(clone)
     })
     categorias.appendChild(fragment)
@@ -299,111 +307,6 @@ const btnAccion = e => {
     }
     e.stopPropagation()
 }
-
-// if (userDataString) {
-//     login.style.display = 'none'
-//     userMenu.style.display = 'block'
-  
-//     const welcomeMessage = userMenu.querySelector('.welcome-message')
-//     welcomeMessage.textContent = `Bienvenido, ` + nm
-
-//     menuIconWrapper.addEventListener('click', () => {
-//         usuarioOpciones.style.display = 'block'
-//     })
-
-//     document.addEventListener('click', (event) => {
-//         if (!usuarioOpciones.contains(event.target) && !menuIconWrapper.contains(event.target)) {
-//           usuarioOpciones.style.display = 'none';
-//         }
-//     })
-//   } else {
-//     login.style.display = 'block';
-//     userMenu.style.display = 'none';
-//   }
-
-// function mostrarProductosCarrito() {
-//     const carritoItems = JSON.parse(localStorage.getItem('carrito')) || {};
-//     const productoIds = Object.keys(carritoItems);
-
-//     Promise.all(
-//         productoIds.map(id => fetch(`http://localhost:8080/producto/id/${id}`).then(resp => resp.json()))
-//     ).then(productos => {
-//         const productosHTML = productos.map((producto, index) => {
-//             const carritoItem = carritoItems[productoIds[index]];
-//             const subtotal = producto.precio * carritoItem.cantidad;
-            
-//             return `
-//             <li class="producto-item">
-//                 <div class="producto-imagen-container">
-//                     <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
-//                 </div>
-//                 <div class="producto-info-container">
-//                     <h3 class="producto-nombre">${producto.nombre}</h3>
-//                     <p class="producto-precio">S/. ${subtotal.toFixed(2)}</p>
-//                     <p class="producto-cantidad">Cantidad: ${carritoItem.cantidad}</p>
-//                     <button class="btn btn-info btn-sm" data-id="${producto.id_producto}">+</button>
-//                     <button class="btn btn-danger btn-sm" data-id="${producto.id_producto}">-</button>
-//                     <span class="vertical-line"></span>
-//                     <button class="btn btn-trash btn-sm btn-secondary" data-id="${producto.id_producto}">Quitar</button>
-//                 </div>
-//             </li>   
-//           `;
-//         }).join('');
-
-//         const total = productos.reduce((acumulador, producto, index) => {
-//             const carritoItem = carritoItems[productoIds[index]];
-//             return acumulador + (producto.precio * carritoItem.cantidad);
-//         }, 0);
-
-//         carritoInfo.innerHTML = `
-//         <div class="carrito-productos">
-//             <ul class="productos-lista" style="max-height: 750px; overflow-y: scroll;">
-//                 ${productosHTML || '<li class="mensaje-vacio">No hay productos en el carrito</li>'}
-//             </ul>
-//         </div>
-//         <div class="carrito-total">
-//             <p>Total: S/. ${total.toFixed(2)}</p>
-//             <button class="ver-carrito-btn">Ver carrito</button>
-//         </div>
-//         `;
-
-//         carritoInfo.style.display = 'block'
-
-//         document.addEventListener('click', (event) => {
-//             const isClickInside = carritoInfo.contains(event.target) || svgCart.contains(event.target);
-//             if (!isClickInside) {
-//               carritoInfo.style.display = 'none';
-//               carritoAbierto = false;
-//             }
-//         })   
-
-//         const verCarrito = document.querySelector('.ver-carrito-btn')
-//         verCarrito.addEventListener('click', () => {
-//             window.location.href = "html/carrito.html"
-//         })
-//         const botonSuma = document.querySelectorAll('.btn-info')
-//         const botonResta = document.querySelectorAll('.btn-danger')
-//         const botonQuitar = document.querySelectorAll('.btn-trash')
-//         botonSuma.forEach(boton => {
-//             boton.addEventListener('click', e => {
-//                 btnAccion(e)
-//                 mostrarProductosCarrito()
-//             })
-//         });
-//         botonResta.forEach(boton => {
-//             boton.addEventListener('click', e => {
-//                 btnAccion(e)
-//                 mostrarProductosCarrito()
-//             })
-//         })
-//         botonQuitar.forEach(boton => {
-//             boton.addEventListener('click', e => {
-//                 btnAccion(e)
-//                 mostrarProductosCarrito()
-//             })
-//         })
-//     })
-// }
 // function notificacionConfirmacion() {
 //     Swal.fire({
 //         position: 'top-end',
@@ -469,21 +372,3 @@ function formatCurrency(amount) {
     const formatter = new Intl.NumberFormat('es-PE', { style:'currency', currency:'PEN' })
     return formatter.format(amount)
 }
-
-// var searchButton = document.querySelector('.search-form #buscar')
-// searchButton.addEventListener('click', function(event) {
-//   event.preventDefault(); 
-//   search(); 
-// })
-// var searchInput = document.getElementById('searchInput')
-// searchInput.addEventListener('keyup', function(event) {
-//     if (event.key === 'Enter') {
-//       event.preventDefault();
-//       search();
-//     }
-//   })
-// window.addEventListener('storage', () => {
-//     if(carritoInfo.style.display == 'block') {
-//         mostrarProductosCarrito()
-//     }
-// })

@@ -1,7 +1,9 @@
-const submitButton = document.getElementById('submitForm')
-const roundedItem = document.getElementById('flecha')
+const loginButton = document.getElementById('loginButton')
+const usernameInput = document.getElementById('usernameInput')
 const passwordInput = document.getElementById('passwordInput')
 const togglePassword = document.getElementById('togglePassword')
+
+let routeLogin = 'http://localhost:4000/api/login/ingresar'
 
 togglePassword.addEventListener('click', function() {
     if(passwordInput.type === 'password') {
@@ -12,61 +14,98 @@ togglePassword.addEventListener('click', function() {
         togglePassword.innerHTML = '<i id="eye" class="fas fa-eye text-gray-400"></i>'
     }
 })
-submitButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    if(!validarCampos()) {
-        return
-    }
+loginButton.addEventListener('click', function() {
+    if(!validarCampos()) { return }
 
-    const usernameInput = document.getElementById('usernameInput');
-    const passwordInput = document.getElementById('passwordInput');
-
-    const username = usernameInput.value;
-    const password = passwordInput.value;
+    var usernameData = usernameInput.value
+    var passwordData = passwordInput.value
 
     const formData = {
-        username: username,
-        password: password
+        username: usernameData,
+        password: passwordData
     }
 
-    fetch('http://localhost:8080/login', {
+    loguearse(formData)
+    // event.preventDefault();
+    // if(!validarCampos()) {
+    //     return
+    // }
+
+    // const usernameInput = document.getElementById('usernameInput');
+    // const passwordInput = document.getElementById('passwordInput');
+
+    // const username = usernameInput.value;
+    // const password = passwordInput.value;
+
+    // const formData = {
+    //     username: username,
+    //     password: password
+    // }
+
+    // fetch('http://localhost:8080/login', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(formData)
+    // })
+    // .then(response => {
+    //     if(response.status === 200) {
+    //         return response.json()
+    //     } else if(response.status === 401) {
+    //         notificacionDenegacion()
+    //         usernameInput.classList.add('input-error')
+    //         passwordInput.classList.add('input-error')
+    //     } else {
+    //         throw new Error("Error en la solicitud")
+    //     }
+    // })
+    // .then(data => {
+    //     const passEncript = encriptar(password)
+    //     localStorage.setItem('userData', data.id_usuario)
+    //     localStorage.setItem('ps', passEncript)
+    //     localStorage.setItem('nm', data.nombres)
+    //     limpiarCampos()
+    //     notificacionConfirmacion(data.nombres)
+    //     console.log(data.itemsRol[0].id_rol)
+    //     setTimeout(() => {
+    //         if(data.itemsRol[0].id_rol === 1) {
+    //             irAdmin()
+    //         } else {
+    //             irCatalogo()
+    //         }
+    //     }, 1200)
+    // })
+    // .catch(error => {
+    //     console.error(error);
+    // })
+})
+function loguearse(formData) {
+    fetch(routeLogin, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
     })
     .then(response => {
-        if(response.status === 200) {
-            return response.json()
-        } else if(response.status === 401) {
-            notificacionDenegacion()
-            usernameInput.classList.add('input-error')
-            passwordInput.classList.add('input-error')
-        } else {
-            throw new Error("Error en la solicitud")
-        }
+        if(response.status === 200) { return response.json() }
+        else if(response.status === 401) { notificacionDenegacion() }
+        else { throw new Error("Error en la solicitud") }
     })
     .then(data => {
-        const passEncript = encriptar(password)
-        localStorage.setItem('userData', data.id_usuario)
+        console.log(data)
+        const passEncript = encriptar(passwordInput.value)
+        localStorage.setItem('uI', data.id_usuario)
         localStorage.setItem('ps', passEncript)
         localStorage.setItem('nm', data.nombres)
         limpiarCampos()
         notificacionConfirmacion(data.nombres)
-        console.log(data.itemsRol[0].id_rol)
         setTimeout(() => {
-            if(data.itemsRol[0].id_rol === 1) {
-                irAdmin()
-            } else {
-                irCatalogo()
-            }
+            if(data.id_rol === 1) { irCatalogo() }
+            else { irCatalogo() }
         }, 1200)
     })
-    .catch(error => {
-        console.error(error);
-    })
-})
+    .catch(error => { console.error(error) })
+}
 function validarCampos() {
     const usernameInput = document.getElementById('usernameInput')
     const passwordInput = document.getElementById('passwordInput')
@@ -156,7 +195,7 @@ function limpiarCampos() {
     document.getElementById('passwordInput').value = ""
 }
 function irCatalogo() {
-    window.location.href = "../index.html"
+    window.location.href = "../../../index.html"
 }
 function irAdmin() {
     window.location.href = "../html/administrador.html"
