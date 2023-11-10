@@ -5,11 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis datos</title>
-    <link rel="stylesheet" type="text/css" href="../css/usuario.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        #eye {
+            position: absolute;
+            top:50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-    <div class="rounded-items top-left">
+<body class="bg-gray-900">
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Logo compañía">
+            <h2 class="mt-6 text-3xl text-center text-white font-bold leading-9 tracking-tight text-gray-900">Datos personales</h2>
+        </div>
+
+        <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form class="rounded-md space-y-5" action="#" method="POST">
+                <div>
+                    <label for="username" class="block text-base font-medium leading-6 text-gray-300">Username</label>
+                    <div class="mt-2">
+                        <input id="usernameInput" type="text" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="password" class="block text-base font-medium leading-6 text-gray-300">Contraseña</label>
+                    <div class="mt-2 flex">
+                        <input id="passwordInput" type="password" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                        <span id="togglePassword" class="relative cursor-pointer">
+                            <i id="eye" class="fas fa-eye text-gray-400"></i>
+                        </span>
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="nombres" class="block text-base font-medium leading-6 text-gray-300">Nombres</label>
+                    <div class="mt-2">
+                        <input id="nombresInput" type="text" required pattern="[A-Za-z]+" oninput="soloLetras(event)" class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="apellidos" class="block text-base font-medium leading-6 text-gray-300">Apellidos</label>
+                    <div class="mt-2">
+                        <input id="apellidosInput" type="text" required oninput="soloLetras(event)" class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="dni" class="block text-base font-medium leading-6 text-gray-300">DNI</label>
+                    <div class="mt-2">
+                        <input id="dniInput" type="text" required oninput="filtrarNumerosDNI(event)" class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="celular" class="block text-base font-medium leading-6 text-gray-300">Celular</label>
+                    <div class="mt-2">
+                        <input id="celularInput" type="text" required oninput="filtrarNumeros(event)" class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="direccion" class="block text-base font-medium leading-6 text-gray-300">Dirección</label>
+                    <div class="mt-2">
+                        <input id="direccionInput" type="text" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-white bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" id="miBoton" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 mt-7 text-base font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-sky-700">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- <div class="rounded-items top-left">
         <div class="rounded-item" id="flecha">
             <i class="fas fa-arrow-left"></i>
         </div>
@@ -52,7 +127,7 @@
         <button id="submitForm">Actualizar</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="../js/usuario.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

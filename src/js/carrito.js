@@ -346,37 +346,3 @@ function formatCurrency(amount) {
     const formatter = new Intl.NumberFormat('es-PE', { style:'currency', currency:'PEN' })
     return formatter.format(amount)
 }
-
-// if (userData) {
-//     loginC.style.display = 'none'
-//     userMenu.style.display = 'block'
-  
-//     const welcomeMessage = userMenu.querySelector('.welcome-message')
-//     welcomeMessage.textContent = `Bienvenido, ` + nm
-
-//     menuIconWrapper.addEventListener('click', () => {
-//         usuarioOpciones.style.display = 'block'
-//     })
-
-//     document.addEventListener('click', (event) => {
-//         if (!usuarioOpciones.contains(event.target) && !menuIconWrapper.contains(event.target)) {
-//           usuarioOpciones.style.display = 'none';
-//         }
-//     })   
-//   } else {
-//     loginC.style.display = 'block';
-//     userMenu.style.display = 'none';
-//   }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,6 @@
-const userData = localStorage.getItem('userData')
+const userData = localStorage.getItem('uI')
 const ps = localStorage.getItem('ps')
-const togglePassword = document.getElementById('togglePassword')
-const roundedItem = document.getElementById('flecha')
-const submitForm = document.getElementById('submitForm')
+
 const usernameInput = document.getElementById('usernameInput')
 const passwordInput = document.getElementById('passwordInput')
 const nombresInput = document.getElementById('nombresInput')
@@ -11,22 +9,32 @@ const dniInput = document.getElementById('dniInput')
 const celularInput = document.getElementById('celularInput')
 const direccionInput = document.getElementById('direccionInput')
 
-datosEditar(userData)
-roundedItem.addEventListener('click', () => {
-    window.location.href = "../index.html"
+let routeUser = 'http://localhost:4000/api/usuario/'
+
+document.addEventListener('DOMContentLoaded', function() {
+  datosEditar(userData)
+  console.log('El DOM se ha cargado completamente')
 })
+
 togglePassword.addEventListener('click', function() {
-    if(passwordInput.type === 'password') {
-        passwordInput.type = 'text'
-        togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>'
-    } else {
-        passwordInput.type = 'password'
-        togglePassword.innerHTML = '<i class="fas fa-eye"></i>'
-    }
+  if(passwordInput.type === 'password') {
+      passwordInput.type = 'text'
+      togglePassword.innerHTML = '<i id="eye" class="fas fa-eye-slash text-gray-400"></i>'
+  } else {
+      passwordInput.type = 'password'
+      togglePassword.innerHTML = '<i id="eye" class="fas fa-eye text-gray-400"></i>'
+  }
 })
-submitForm.addEventListener('click', () => {
-    actualizarDatos()
-})
+
+const fecthData = async(ruta) => {
+  try {
+    const res = await fetch(ruta)
+    const data = await res.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 function actualizarDatos() {
   validarCampos()
@@ -86,41 +94,45 @@ function actualizarDatos() {
       } 
     })
 }
-function datosEditar(userId) {
-    fetch(`http://localhost:8080/usuario/id/${userId}`)
-        .then(response => response.json())
-        .then(usuario => {
-            usernameInput.value = usuario.username
-            passwordInput.value = desencriptar(ps)
-            nombresInput.value = usuario.nombres
-            apellidosInput.value = usuario.apellidos
-            dniInput.value = usuario.dni
-            celularInput.value = usuario.celular
-            direccionInput.value = usuario.direccion
-        })
-        .catch(error => {
-            console.error("Error al obtener los datos del usuario: ",error)
-        })
+async function datosEditar(userId) {
+    try {
+      const usuario = await fecthData(routeUser + `${userId}`)
+      usernameInput.value = usuario.username
+      passwordInput.value = desencriptar(ps)
+      nombresInput.value = usuario.nombres
+      apellidosInput.value = usuario.apellidos
+      dniInput.value = usuario.dni
+      celularInput.value = usuario.celular
+      direccionInput.value = usuario.direccion
+    } catch (error) {
+      console.error("Error al obtener los datos del usuario: ", error)
+    }
 }
 function filtrarNumeros(event) {
-    const input = event.target
-    const regex = /[^0-9]/g
-    let value = input.value.replace(regex, '')
+  const input = event.target
+  const regex = /[^0-9]/g
+  let value = input.value.replace(regex, '')
 
-    if (!value.startsWith('9')) {
-        value = '9' + value.slice(0, 8) // Agregar el dígito "9" al principio y limitar a 8 dígitos adicionales
-      } else {
-        value = value.slice(0, 9) // Limitar a un máximo de 9 dígitos
-      }
-      
-      input.value = value
+  if (!value.startsWith('9')) {
+      value = '9' + value.slice(0, 8) // Agregar el dígito "9" al principio y limitar a 8 dígitos adicionales
+    } else {
+      value = value.slice(0, 9) // Limitar a un máximo de 9 dígitos
+    }
+    
+    input.value = value
 }
 function filtrarNumerosDNI(event) {
-    const input = event.target
-    const regex = /[^0-9]/g
-    let value = input.value.replace(regex, '')
-    value = value.slice(0, 8)
-    input.value = value
+  const input = event.target
+  const regex = /[^0-9]/g
+  let value = input.value.replace(regex, '')
+  value = value.slice(0, 8)
+  input.value = value
+}
+function soloLetras(event) {
+  const input = event.target
+  const regex = /[0-9]/
+  let value = input.value.replace(regex, '')
+  input.value = value
 }
 function usernameEnUso() {
     Swal.fire({
@@ -169,33 +181,6 @@ function celularEnUso() {
         }
       })
       celularInput.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-}
-function aplicarEstilosError(elemento) {
-    if(elemento.value === '') {
-        elemento.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-    } else {
-        elemento.style.boxShadow = ''
-    }
-}
-function validarCampos() {
-    aplicarEstilosError(usernameInput)
-    aplicarEstilosError(passwordInput)
-    aplicarEstilosError(nombresInput)
-    aplicarEstilosError(apellidosInput)
-    aplicarEstilosError(dniInput)
-    aplicarEstilosError(celularInput)
-    aplicarEstilosError(direccionInput)
-}
-function camposValidados() {
-  return (
-      usernameInput.value !== '' &&
-      passwordInput.value !== '' &&
-      nombresInput.value !== '' &&
-      apellidosInput.value !== '' &&
-      dniInput.value !== '' &&
-      celularInput.value !== '' &&
-      direccionInput.value !== ''
-  )
 }
 function desencriptar(password) {
     let passwordDesencript = ""
