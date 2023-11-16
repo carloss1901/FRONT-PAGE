@@ -5,31 +5,146 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos Recibidos</title>
-    <link rel="stylesheet" type="text/css" href="../css/pedidosEntregados.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-      <div class="header-wrapper">
-        <a href="administrador.html" class="header-option">
-          Pedidos Realizados
-          <span class="contador" id="contador-pedidos-realizados">0</span>
-        </a>
-        <a href="pedidosRecibidos.html" class="header-option">
-          Pedidos Recibidos
-          <span class="contador" id="contador-pedidos-recibidos">0</span>
-        </a>
-        <a href="pedidosEntregados.html" class="header-option active">Pedidos Entregados</a>
-        <a href="productos.html" class="header-option">Productos</a>
-        <a href="categorias.html" class="header-option">Categorías</a>
-    </header>
+<body class="bg-slate-800">
+  <header>
+    <nav class="flex items-center bg-gray-800 h-20">
+      <div class="flex justify-between items-center mx-auto max-w-7xl w-full">
+        <div class="hidden sm:flex sm:gap-6 md:gap-10 gap-20 w-full font-medium">
+          <a href="../html/administrador.html" class="relative hover:bg-gray-600 px-3 py-1.5 text-white text-base rounded-lg">Pedidos Realizados
+            <p class="absolute bg-red-500 text-white w-5 h-5 rounded-full text-sm font-semibold right-0 -top-1.5 -mr-2.5">
+              <span id="contador-p-realizados" class="flex items-center justify-center"></span>
+            </p>
+          </a>
+          <a href="../html/pedidosRecibidos.html" class="relative hover:bg-gray-600 transition px-3 py-1.5 text-white text-base cursor-pointer rounded-lg">Pedidos Recibidos
+            <p class="absolute bg-red-500 text-white w-5 h-5 rounded-full text-sm font-semibold right-0 -top-1.5 -mr-2.5">
+              <span id="contador-p-recibidos" class="flex items-center justify-center"></span>
+            </p>
+          </a>
+          <a class="relative bg-gray-600 transition px-3 py-1.5 text-white sm:text-base text-base cursor-pointer rounded-lg">Pedidos Entregados</a>
+          <a href="../html/categorias.html" class="relative hover:bg-gray-600 transition px-3 py-1.5 text-white sm:text-base text-base cursor-pointer rounded-lg">Categorías</a>
+          <a href="../html/productos.html" class="relative hover:bg-gray-600 transition px-3 py-1.5 text-white sm:text-base text-base cursor-pointer rounded-lg">Productos</a>
+        </div>
 
-    <div class="cuerpo">
-      <h1 class="titulo">Pedidos Entregados</h1>
-      <div id="pedidosContainer"></div>
+        <div class="sm:hidden flex items-center gap-5 w-full font-medium">
+          <a href="../html/administrador.html" class="relative hover:bg-gray-600 px-3 py-1.5 text-white text-sm rounded-lg">Realizados
+            <p class="absolute bg-red-500 text-white w-5 h-5 rounded-full text-sm font-semibold right-0 -top-1.5 -mr-2.5">
+              <span id="contador-p-realizados-m" class="flex items-center justify-center"></span>
+            </p>
+          </a>
+          <a href="../html/pedidosRecibidos.html" class="relative hover:bg-gray-600 transition px-3 py-1.5 text-white text-sm cursor-pointer rounded-lg">Recibidos
+            <p class="absolute bg-red-500 text-white w-5 h-5 rounded-full text-sm font-semibold right-0 -top-1.5 -mr-2.5">
+              <span id="contador-p-recibidos-m" class="flex items-center justify-center"></span>
+            </p>
+          </a>
+          <a class="relative bg-gray-600 transition px-3 py-1.5 text-white text-sm cursor-pointer rounded-lg">Entregados</a>
+        </div>
+
+        <div class="relative">
+          <button id="botonOpciones" onclick="menuUsuario()" class="relative z-10 flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="absolute -inset-0.5"></span>
+            <span class="sr-only">Open</span>
+            <svg id="svgAbrir" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg id="svgCerrar" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div id="opcionesIndex" class="hidden absolute mt-2 w-48 z-10 bg-gray-800 rounded-md p-2 right-0 origin-top-right">
+            <a href="../../index.html" class="text-gray-300 hover:bg-gray-700 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Catálogo</a>
+            <a href="../html/usuario.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Mis datos</a>
+            <button onclick="cerrarSesion()" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium text-left w-full">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <section class="bg-slate-800 my-5">
+    <div class="mx-auto max-w-7xl p-2 bg-slate-700 rounded-lg mt-3 mb-3">
+        <div class="flex gap-4 items-center h-16 ml-3">
+          <svg class="w-6 h-6 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z"/>
+            <path d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z"/>
+          </svg>
+          <p class="text-gray-100 font-semibold tracking-wider sm:text-3xl text-xl">PEDIDOS ENTREGADOS</p>
+        </div>
     </div>
+  </section>
+  <section id="pedidos-mobile" class="sm:hidden"></section>
+  <section id="pedidos" class="hidden sm:block"></section>
 
-    <script src="../js/pedidosEntregados.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <template id="template-pedido">
+    <div class="hidden sm:block bg-slate-700 mx-auto rounded-lg xl:max-w-5xl lg:max-w-4xl md:max-w-3xl sm:max-w-2xl p-2 mb-5 shadow-lg">
+      <div class="flex items-center justify-between text-gray-50">
+        <h1 class="font-bold text-lg py-1.5 px-2.5 sm:text-2xl">Pedido <span id="contador-pedido">1</span></h1>
+        <span class="p-1.5 text-sm font-medium uppercase trackin-wider text-green-200 rounded-lg bg-opacity-50 border border-green-300">ENTREGADO</span>
+      </div>
+  
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-2.5 md:text-lg">Fecha: <span id="fecha-pedido" class="font-semibold text-base sm:text-base md:text-lg">10/10/2023</span></h1>
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-2.5 md:text-lg">Cliente: <span id="nombres-cliente" class="font-semibold text-base sm:text-base md:text-lg">Carlos Jesús</span></h1>
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-2.5 md:text-lg">DNI: <span id="dni-cliente" class="font-semibold text-base sm:text-base md:text-lg">12345678</span></h1>
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-2.5 md:text-lg">Dirección: <span id="direccion-cliente" class="font-semibold text-base sm:text-base md:text-lg">Av. La Paz</span></h1>
+  
+      <table class="w-full text-base font-light">
+        <thead class="border-b border-gray-500 font-medium text-gray-50">
+          <tr>
+            <th scope="col" class="px-3 py-2 md:text-lg xl:text-xl text-left">Producto</th>
+            <th scope="col" class="px-6 py-2 md:text-lg xl:text-xl">Cantidad</th>
+            <th scope="col" class="px-6 py-2 md:text-lg xl:text-xl">Precio u.</th>
+            <th scope="col" class="px-6 py-2 md:text-lg xl:text-xl">Total</th>
+          </tr>
+        </thead>
+        <tbody id="productos-pedido" class="text-gray-50 font-semibold text-sm md:text-base border-b border-gray-600 mb-2"></tbody>
+      </table>
+  
+      <div class="flex justify-between text-white font-semibold sm:text-base md:text-lg my-1.5">
+        <p class="sm:pl-2.5">Costo total:</p>
+        <p class="sm:pr-2.5 md:pr-3 text-green-500">S/. <span id="total-precio-pedido">200.00</span></p>
+      </div>
+    </div>
+  </template>
+  <template id="template-producto">
+    <tr>
+      <td id="nombre-producto" class="font-semibold md:text-base xl:text-lg px-3 py-2">Chocolate Winter - 800gr</td>
+      <td id="cantidad-producto" class="text-center md:text-base xl:text-lg px-3 py-2">10</td>
+      <td class="text-center md:text-base xl:text-lg px-3 py-2">S/. <span id="precio-producto">10.00</span></td>
+      <td class="text-right md:text-base xl:text-lg p-3 py-2 text-green-500">S/. <span id="total-precio-producto">100.00</span></td>
+    </tr>
+  </template>
+  <template id="template-pedido-mobile">
+    <div class="mx-2.5 p-2 rounded-lg bg-slate-700 mb-5">
+      <div class="flex justify-between items-center">
+        <h1 class="text-gray-100 text-xl font-bold">Pedido <span id="contador-mobile">1</span></h1>
+        <button id="button-entregado" class="text-white text-base p-1.5 bg-blue-500 rounded-lg font-semibold">Entregado</button>
+      </div>
+
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-1 md:text-lg">Fecha: <span id="fecha-pedido" class="font-semibold text-base sm:text-base md:text-lg">10/10/2023</span></h1>
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-1 md:text-lg">Cliente: <span id="nombres-cliente" class="font-semibold text-base sm:text-base md:text-lg">Carlos Jesús</span></h1>
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-1 md:text-lg">DNI: <span id="dni-cliente" class="font-semibold text-base sm:text-base md:text-lg">12345678</span></h1>
+      <h1 class="font-semibold text-base text-gray-50 py-1.5 px-1 md:text-lg">Dirección: <span id="direccion-cliente" class="font-semibold text-base sm:text-base md:text-lg">Av. La Paz</span></h1>
+
+      <div id="productos-mobile"></div>
+
+      <div class="flex justify-between text-gray-100 items-center font-semibold"> 
+        <p>Costo total:</p>
+        <p class="text-green-500 text-lg">S/. <span id="precio-total-mobile">100.00</span></p>
+      </div>
+    </div>
+  </template>
+  <template id="template-producto-mobile">
+    <div class="bg-slate-600 p-1.5 mb-3 rounded-lg text-gray-100">
+      <p>Producto: <span id="nombre-mobile">Chocolate Winter 800 gr</span></p>
+      <p>Cantidad: <span id="cantidad-mobile">1</span></p>
+      <div class="flex justify-between">
+        <p>Unidad: S/. <span id="precio-mobile">10.00</span></p>
+        <p>Total: S/. <span id="total-mobile">20.00</span></p>
+      </div>
+    </div>
+  </template>
+
+  <script src="../js/pedidosEntregados.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

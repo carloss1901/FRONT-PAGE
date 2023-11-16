@@ -100,7 +100,7 @@ function loguearse(formData) {
         limpiarCampos()
         notificacionConfirmacion(data.nombres)
         setTimeout(() => {
-            if(data.id_rol === 1) { irCatalogo() }
+            if(data.id_rol === 1) { irAdmin() }
             else { irCatalogo() }
         }, 1200)
     })

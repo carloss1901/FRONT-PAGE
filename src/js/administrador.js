@@ -1,272 +1,180 @@
-const pedidosContainer = document.getElementById('pedidosContainer')
-const userDataA = localStorage.getItem('userData')
+const userDataA = localStorage.getItem('uI')
 const ps = localStorage.getItem('ps')
-const nm = localStorage.getItem('nm')
-const userMenuA = document.getElementById('user-menu')
-const contadorRecibidos = document.getElementById('contador-pedidos-recibidos')
-const contadorRealizados = document.getElementById('contador-pedidos-realizados')
-const menuIconWrapperA = document.getElementById('menu-icon-wrapper')
-const usuarioOpcionesA = document.getElementById('usuario-opciones')
-const logoutAd = document.getElementById('logout')
-const catalogo = document.getElementById('catalogo')
 
-logoutAd.addEventListener('click', () => {
-  localStorage.removeItem('userData')
+const templatePedidos = document.getElementById('template-pedido').content
+const templateProducto = document.getElementById('template-producto').content
+const templatePedidosMobile = document.getElementById('template-pedido-mobile').content
+const templateProductoMobile = document.getElementById('template-producto-mobile').content
+
+const pedidos = document.getElementById('pedidos')
+const pedidosMobile = document.getElementById('pedidos-mobile')
+const contadorRealizados = document.getElementById('contador-p-realizados')
+const contadorRealizadosM = document.getElementById('contador-p-realizados-m')
+const contadorRecibidos = document.getElementById('contador-p-recibidos')
+const contadorRecibidosM = document.getElementById('contador-p-recibidos-m')
+
+const fragment = document.createDocumentFragment()
+
+let routePedido = 'http://localhost:4000/api/pedido/listar/noentregados'
+let routePedidoRecibido = 'http://localhost:4000/api/pedido/recibir/'
+let routeRecibidosCount = 'http://localhost:4000/api/pedido/listar/recibidos/count'
+
+document.addEventListener('DOMContentLoaded', function() {
+  fetchInitializer()
+  console.log("El DOM se ha cargado completamente")
+})
+
+const fetchInitializer = async () => {
+  try {
+    const [pedidosData, contadorRecibidos] = await Promise.all([
+      fetchData(routePedido),
+      fetchData(routeRecibidosCount)
+    ])
+
+    pintarPedidos(pedidosData)
+    pintarPedidosMobile(pedidosData)
+    countRecibidos(contadorRecibidos.count)
+  } catch (error) {
+    console.log(error)
+  }
+}
+const fetchData = async (ruta) => {
+  try {
+    const res = await fetch(ruta)
+    const data = await res.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+const pintarPedidos = data => {
+  contadorRealizados.innerHTML = ''
+
+  if(data.length === 0) { contadorRealizados.textContent = '0' }
+  else { contadorRealizados.textContent = data.length }
+
+  data.forEach((pedido) => {
+    const clone = templatePedidos.cloneNode(true)
+
+    clone.querySelector('#contador-pedido').textContent = pedido.id_pedido
+    clone.querySelector('#fecha-pedido').textContent = pedido.fecha_pedido
+    clone.querySelector('#nombres-cliente').textContent = pedido.usuario.nombres + ' ' + pedido.usuario.apellidos
+    clone.querySelector('#dni-cliente').textContent = pedido.usuario.dni
+    clone.querySelector('#direccion-cliente').textContent = pedido.usuario.direccion
+
+    const detallesContenedor = clone.querySelector('#productos-pedido')
+    const botonRecibido = clone.querySelector('#button-recibido')
+    
+    let total = 0
+
+    pedido.detalles.forEach(detalle => {
+      const detalleClone = templateProducto.cloneNode(true)
+
+      detalleClone.querySelector('#nombre-producto').textContent = detalle.producto.nombre
+      detalleClone.querySelector('#cantidad-producto').textContent = detalle.cantidad
+      detalleClone.querySelector('#precio-producto').textContent = detalle.precio.toFixed(2)
+      detalleClone.querySelector('#total-precio-producto').textContent = (detalle.precio * detalle.cantidad).toFixed(2)
+
+      total += (detalle.producto.precio * detalle.cantidad)
+
+      detallesContenedor.appendChild(detalleClone)
+    })
+    clone.querySelector('#total-precio-pedido').textContent = total.toFixed(2)
+
+    botonRecibido.addEventListener('click', () => {
+      confirmarPedidoRecibido(pedido.id_pedido)
+    })
+
+    fragment.appendChild(clone)
+  })
+  pedidos.appendChild(fragment)
+}
+const pintarPedidosMobile = data => {
+  contadorRealizadosM.innerHTML = ''
+
+  if(data.length === 0) { contadorRealizadosM.textContent = '0' }
+  else { contadorRealizadosM.textContent = data.length }
+
+  data.forEach((pedido) => {
+    const clone = templatePedidosMobile.cloneNode(true)
+
+    clone.querySelector('#contador-mobile').textContent = pedido.id_pedido
+    clone.querySelector('#fecha-pedido').textContent = pedido.fecha_pedido
+    clone.querySelector('#nombres-cliente').textContent = pedido.usuario.nombres + ' ' + pedido.usuario.apellidos
+    clone.querySelector('#dni-cliente').textContent = pedido.usuario.dni
+    clone.querySelector('#direccion-cliente').textContent = pedido.usuario.direccion
+    
+    const detallesContenedor = clone.querySelector('#productos-mobile')
+
+    let total = 0
+
+    pedido.detalles.forEach(detalle => {
+      const detalleClone = templateProductoMobile.cloneNode(true)
+
+      detalleClone.querySelector('#nombre-mobile').textContent = detalle.producto.nombre
+      detalleClone.querySelector('#cantidad-mobile').textContent = detalle.cantidad
+      detalleClone.querySelector('#precio-mobile').textContent = detalle.precio.toFixed(2)
+      detalleClone.querySelector('#total-mobile').textContent = (detalle.precio * detalle.cantidad).toFixed(2)
+
+      total += (detalle.producto.precio * detalle.cantidad)
+
+      detallesContenedor.appendChild(detalleClone)
+    })
+    clone.querySelector('#precio-total-mobile').textContent = total.toFixed(2)
+
+    fragment.appendChild(clone)
+  })
+  pedidosMobile.appendChild(fragment)
+}
+const countRecibidos = async (dato) => {
+  try {
+    contadorRecibidos.innerHTML = ''
+    contadorRecibidosM.innerHTML = ''
+    contadorRecibidos.textContent = dato
+    contadorRecibidosM.textContent = dato
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function menuUsuario() {
+  svgAbrir.classList.toggle('hidden')
+  svgCerrar.classList.toggle('hidden')
+  opcionesIndex.classList.toggle('hidden')
+}
+function cerrarSesion() {
+  localStorage.removeItem('uI')
   localStorage.removeItem('ps')
   localStorage.removeItem('nm')
-  window.location.href="../index.html"
-})
-catalogo.addEventListener('click', () => {
-  window.location.href = "../index.html"
-})
-
-contadorPedidosRealizados()
-  .then(contador => {
-    const contadorElement = contadorRealizados
-    contadorElement.textContent = contador
-  })
-  .catch(error => {
-    console.error("Error al obtener el contador de pedidos realizados:",error)
-  })
-contadorPedidosRecibidos()
-  .then(contador => {
-    const contadorElement = contadorRecibidos
-    contadorElement.textContent = contador
-  })
-  .catch(error => {
-    console.error("Error al obtener el contador de pedidos recibidos:",error)
-  })
-
-buscarUsuario(userDataA)
-  .then(username => {
-    const c = desencriptar(ps)
-    const headers = new Headers()
-    headers.append('Authorization', 'Basic ' + btoa(username + ":" + c))
-    fetch(`http://localhost:8080/pedido/listar/noentregados`, {
-      method: 'GET',
-      headers: headers
-    })
-      .then(response => response.json())
-      .then(data => {
-        data.forEach(pedido => {
-          const pedidoItem = document.createElement('div')
-          pedidoItem.classList.add('pedido-item')
-
-          const botonesContainer = document.createElement('div')
-          botonesContainer.classList.add('botones-container')
-
-          const boton1 = document.createElement('button')
-          boton1.textContent = 'Recibido'
-          boton1.addEventListener('click', () => {
-            pedidoRecibido(pedido.id_pedido)
-          })
-
-          const boton2 = document.createElement('button')
-          boton2.textContent = 'Entregado'
-          boton2.addEventListener('click', () => {
-            pedidoEntregado(pedido.id_pedido)
-          })
-
-          botonesContainer.appendChild(boton1)
-          botonesContainer.appendChild(boton2)
-          pedidoItem.appendChild(botonesContainer)
-
-          const pedidoNumero = document.createElement('h2')
-          pedidoNumero.textContent = `Pedido #${pedido.id_pedido}`
-          pedidoItem.appendChild(pedidoNumero)
-
-          const fechaPedido = document.createElement('h5')
-          fechaPedido.classList.add('fecha-pedido')
-          fechaPedido.textContent = `Fecha: ${pedido.fechaPedido}`
-          pedidoItem.appendChild(fechaPedido)
-
-          const clienteNombre = document.createElement('h5')
-          clienteNombre.textContent = `Cliente: ${pedido.usuario.nombres} ${pedido.usuario.apellidos}`
-          pedidoItem.appendChild(clienteNombre)
-          
-          const clienteDni = document.createElement('h5')
-          clienteDni.textContent = `DNI: ${pedido.usuario.dni}`
-          pedidoItem.appendChild(clienteDni)
-
-          const clienteDireccion = document.createElement('h5')
-          clienteDireccion.textContent = `Dirección: ${pedido.usuario.direccion}`
-          pedidoItem.appendChild(clienteDireccion)
-
-          const productoContainer = document.createElement('div')
-          productoContainer.classList.add('productos')
-          pedidoItem.appendChild(productoContainer)
-
-          const tablaProductos = document.createElement('table')
-          const thead = document.createElement('thead')
-          const tbody = document.createElement('tbody')
-          tablaProductos.appendChild(thead)
-          tablaProductos.appendChild(tbody)
-          productoContainer.appendChild(tablaProductos)
-
-          const encabezadosRow = document.createElement('tr')
-
-          const encabezadoProducto = document.createElement('th')
-          encabezadoProducto.textContent = 'PRODUCTO'
-          encabezadosRow.appendChild(encabezadoProducto)
-
-          const encabezadoCantidad = document.createElement('th')
-          encabezadoCantidad.textContent = 'CANTIDAD'
-          encabezadosRow.appendChild(encabezadoCantidad)
-
-          const encabezadoPrecio = document.createElement('th')
-          encabezadoPrecio.textContent = 'PRECIO UNIT.'
-          encabezadosRow.appendChild(encabezadoPrecio)
-
-          const encabezadoSubTotal = document.createElement('th')
-          encabezadoSubTotal.textContent = 'TOTAL'
-          encabezadosRow.appendChild(encabezadoSubTotal)
-
-          thead.appendChild(encabezadosRow)
-
-          const totalPedido = document.createElement('p')
-          totalPedido.classList.add('pedido-total')
-          pedidoItem.appendChild(totalPedido)
-
-          pedidosContainer.appendChild(pedidoItem)
-
-          const detalles = pedido.detalles
-          detalles.forEach(detalle => {
-            const filaProducto = document.createElement('tr')
-
-            const nombreProducto = document.createElement('td')
-            const cantidadProducto = document.createElement('td')
-            const precioProducto = document.createElement('td')
-            const subtotalProducto = document.createElement('td')
-
-            cantidadProducto.classList.add('centrado')
-            precioProducto.classList.add('derecha')
-            subtotalProducto.classList.add('derecha')
-
-            nombreProducto.textContent = detalle.producto.nombre
-            cantidadProducto.textContent = detalle.cantidad
-            precioProducto.textContent = `${detalle.precio.toLocaleString("es-PE", { style: "currency", currency: "PEN" })}`
-            subtotalProducto.textContent = `${((detalle.cantidad * detalle.producto.precio).toLocaleString("es-PE", { style: "currency", currency: "PEN" }))}`
-
-            filaProducto.appendChild(nombreProducto)
-            filaProducto.appendChild(cantidadProducto)
-            filaProducto.appendChild(precioProducto)
-            filaProducto.appendChild(subtotalProducto)
-            tbody.appendChild(filaProducto)
-          })
-
-          const total = pedido.detalles.reduce((acc, detalle) => acc + (detalle.cantidad * detalle.producto.precio), 0)
-
-          const filaTotal = document.createElement('tr')
-          const celdaTotal = document.createElement('td')
-          const celdaVacia = document.createElement('td')
-
-          celdaVacia.setAttribute('colspan','3')
-          celdaVacia.textContent = 'Costo total: '
-          celdaVacia.classList.add('vacia')
-
-          celdaTotal.textContent = `${total.toLocaleString("es-PE", { style: "currency", currency: "PEN" })}`
-          celdaTotal.classList.add('fila-total')
-          filaTotal.appendChild(celdaVacia)
-          filaTotal.appendChild(celdaTotal)
-          tbody.appendChild(filaTotal)
-        })
-      })
-      .catch(error => {
-        console.error("Error: ",error)
-      })
-  })
-
-if (userDataA) {
-    login.style.display = 'none'
-    userMenuA.style.display = 'block'
-  
-    const welcomeMessage = userMenuA.querySelector('.welcome-message')
-    welcomeMessage.textContent = `Bievenido, ` + nm
-
-    menuIconWrapperA.addEventListener('click', () => {
-        usuarioOpcionesA.style.display = 'block'
-    })
-
-    document.addEventListener('click', (event) => {
-        if (!usuarioOpcionesA.contains(event.target) && !menuIconWrapperA.contains(event.target)) {
-          usuarioOpcionesA.style.display = 'none';
-        }
-    })     
-  } else {
-    login.style.display = 'block';
-    userMenuA.style.display = 'none';
-  }
-
-function pedidoEntregado(pedidoId) {
-  Swal.fire({
-    icon: 'info',
-    title: 'Pedido Entregado',
-    text: '¿Quiere marcar el pedido como entregado?',
-    showCancelButton: true,
-    showConfirmButton: true,
-    confirmButtonText: 'Aceptar',
-    cancelButtonText: 'Cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      buscarUsuario(userDataA)
-        .then(username => {
-          const c = desencriptar(ps)
-          const headers = new Headers()
-          headers.append('Authorization', 'Basic ' + btoa(username + ":" + c))
-          fetch(`http://localhost:8080/pedido/entregado/${pedidoId}`, {
-            method: 'DELETE',
-            headers: headers
-          })
-          .then(response => {
-            if (response.ok) {
-              notificacionConfirmacion('success', 'Pedido Entregado', 'El pedido ha sido marcado como entregado.')
-            } else {
-              notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al marcar el pedido como entregado.')
-            }
-          })
-          .catch(error => {
-            notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al marcar el pedido como entregado.')
-            console.error(error)
-          })
-        })
-    }
-  })
+  irCatalogo()
 }
-function pedidoRecibido(pedidoId) {
+
+function confirmarPedidoRecibido(pedidoId) {
   Swal.fire({
     icon: 'info',
     title: 'Pedido Recibido',
-    text: '¿Quiere marcar el pedido como recibido?',
+    text: '¿Quieres marcar el pedido como recibido?',
     showCancelButton: true,
     showConfirmButton: true,
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar'
   }).then((result) => {
-    if (result.isConfirmed) {
-      buscarUsuario(userDataA)
-        .then(username => {
-          const c = desencriptar(ps)
-          const headers = new Headers()
-          headers.append('Authorization', 'Basic ' + btoa(username + ":" + c))
-          fetch(`http://localhost:8080/pedido/recibido/${pedidoId}`, {
-            method: 'DELETE',
-            headers: headers
-          })
-          .then(response => {
-            if (response.ok) {
-              notificacionConfirmacion('success', 'Pedido Recibido', 'El pedido ha sido marcado como recibido.')
-            } else {
-              notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al marcar el pedido como recibido.')
-            }
-          })
-          .catch(error => {
-            notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al marcar el pedido como recibido.')
-            console.error(error)
-          })
-        })
+    if(result.isConfirmed) {
+      fetch(routePedidoRecibido + `${pedidoId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Pedido Recibido', 'El pedido ha sido marcado como recibido.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al marcar el pedido como recibido.') }
+      })
+      .catch(error => {
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
+      })
     }
   })
 }
+
 function notificacionConfirmacion(icon, title, text) {
   Swal.fire({
     icon: icon,
@@ -281,58 +189,6 @@ function notificacionConfirmacion(icon, title, text) {
     }
   })
 }
-function contadorPedidosRecibidos() {
-  return new Promise((resolve, reject) => {
-    buscarUsuario(userDataA)
-      .then(username => {
-        const c = desencriptar(ps)
-        const headers = new Headers()
-        headers.append('Authorization', 'Basic ' + btoa(username + ':' + c))
-        fetch("http://localhost:8080/pedido/listar/recibidos", {
-          method: 'GET',
-          headers: headers
-        })
-          .then(response => response.json())
-          .then(data => {
-            const contador = data.length
-            resolve(contador)
-          })
-          .catch(error => {
-            console.error("Error al obtener los pedidos recibidos: ", error)
-            reject(error)
-          })
-      })
-  })
-  .catch(error => {
-    reject(error)
-  })
-}
-function contadorPedidosRealizados() {
-  return new Promise((resolve, reject) => {
-    buscarUsuario(userDataA)
-      .then(username => {
-        const c = desencriptar(ps)
-        const headers = new Headers()
-        headers.append('Authorization', 'Basic ' + btoa(username + ':' + c))
-        fetch("http://localhost:8080/pedido/listar/noentregados", {
-          method: 'GET',
-          headers: headers
-        })
-        .then(response => response.json())
-        .then(data => {
-            const contador = data.length
-            resolve(contador)
-        })
-        .catch(error => {
-          console.error("Error al obtener los pedidos realizados: ", error)
-          reject(error)
-        })
-      })
-  })
-  .catch(error => {
-    reject(error)
-  })
-}
 function desencriptar(password) {
   let passwordDesencript = ""
   for(let i = 0; i < password.length; i++) {
@@ -344,18 +200,7 @@ function desencriptar(password) {
   }
   return passwordDesencript
 }
-function buscarUsuario(userId) {
-  return fetch(`http://localhost:8080/usuario/id/${userId}`)
-  .then(response => response.json())
-  .then(user => {
-    if(user && user.username) {
-      return user.username
-    } else {
-      throw new Error('No se encontró el nombre de usuario')
-    }
-  })
-  .catch(error => {
-    console.error('Error al obtener los datos del usuario: ', error)
-    throw error
-  })
+
+function irCatalogo() {
+  window.location.href = "../../../index.html"
 }
