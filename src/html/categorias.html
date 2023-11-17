@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categorias</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="/src/css/estilos.css">
 </head>
-<body class="bg-slate-800">
+<body id="body" class="bg-slate-800">
     <header class="bg-gray-800">
-      <button class="flex items-center gap-2 text-gray-200 px-3 py-2 hover:scale-110 ease-in-out transition">
+      <button onclick="volver()" class="flex items-center gap-2 text-gray-200 px-3 py-2 hover:scale-110 ease-in-out transition">
         <div class="p-1.5 rounded-full bg-gray-500 mt-1">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -31,51 +32,107 @@
       </div>
     </section>
 
-    <section>
-      
+    <section class="flex justify-between mx-auto max-w-7xl">
+      <h1></h1>
+      <button onclick="mostrarDialogAgregar()" class="bg-blue-600 hover:bg-blue-500 transition text-gray-200 font-semibold p-2.5 rounded-lg">Agregar categoría</button>
     </section>
-    <!-- <div id="formularioEditar" style="display: none;">
-      <form>
-        <h1 style="text-align: center;">Editar Categoría</h1>
-        <br>
-        <label for="idCategoria">ID:</label>
-        <input type="text" id="idCategoria" name="idCategoria" readonly onmousedown="return false;">
-        
-        <label for="nombreCategoria">Nombre:</label>
-        <input type="text" id="nombreCategoria" name="nombreCategoria">
-        
-        <label for="estadoCategoria">Estado:</label>
-        <div class="styled-select">
-          <select id="estadoCategoria" name="estadoCategoria" disabled>
-            <option value="si">Activo</option>
-            <option value="no">No activo</option>
-          </select>
+
+    <section class="flex justify-center text-gray-200 mt-1">
+      <table class="table-fixed">
+        <thead>
+          <tr>
+            <th class="border-b font-medium px-5 py-2.5 text-lg text-gray-200">#</th>
+            <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200 text-left">Nombre</th>
+            <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200 text-left">Estado</th>
+            <th class="border-b"></th>
+            <th class="border-b"></th>
+          </tr>
+        </thead>
+        <tbody id="datos-categoria"></tbody>
+      </table>
+    </section>
+
+    <dialog id="dialog-agregar" class="p-3 bg-slate-800 w-96 rounded-lg border border-slate-700">
+      <div class="relative h-16 min-h-min">
+        <div class="flex items-center justify-between">
+          <h1 class="text-gray-200 text-2xl font-semibold underline decoration-sky-500 font-mono uppercase">Agregar categoría</h1>
+          <button onclick="cerrarDialogAgregar()" class="flex items-center justify-center rounded-md p-1.5 text-gray-400 border border-slate-600">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-        
-        <button type="button" id="btnActualizar">Actualizar</button>
-      </form>
-    </div>
-
-    <div id="formularioRegistrar" style="display: none;">
-      <form>
-        <h1 style="text-align: center;">Registrar Categoría</h1>
-        <br>
-        <label for="nombreCategoria">Nombre:</label>
-        <input type="text" id="nombreCategoriaR" name="nombreCategoriaR">
-        
-        <button type="button" id="btnRegistrar">Registrar</button>
-      </form>
-    </div>
-
-    <div class="cuerpo">
-      <h1 class="titulo">Categorías</h1>
-      <div class="boton-derecha">
-        <button class="btn btn-primary" id="btnGuardarCategoria"><strong>Agregar Nueva Categoria</strong></button>
       </div>
-      <div id="categoriaContainer"></div>
-    </div> -->
 
-    <!-- <script src="../js/categoria.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+      <form action="#" class="space-y-5" method="POST">
+        <div class="mx-auto">
+            <label for="username" class="block text-base font-medium leading-6 text-gray-300">Nombre</label>
+            <div class="mt-2">
+                <input id="nombre-categoria" type="text" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base sm:leading-6 outline-none">
+            </div>
+        </div>
+
+        <div>
+            <button id="boton-agregar" type="button" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 mt-7 text-base font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-sky-700">Agregar</butto>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="dialog-actualizar" class="p-3 bg-slate-800 w-96 rounded-lg border border-slate-700">
+      <div class="relative h-16 min-h-min">
+        <div class="flex items-center justify-between">
+          <h1 class="text-gray-200 text-2xl font-semibold underline decoration-sky-500 font-mono uppercase">Editar categoría</h1>
+          <button onclick="cerrarDialog()" class="flex items-center justify-center rounded-md p-1.5 text-gray-400 border border-slate-600">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <form action="#" class="space-y-5" method="POST">
+        <div class="mx-auto">
+            <label for="username" class="block text-base font-medium leading-6 text-gray-300">Nombre</label>
+            <div class="mt-2">
+                <input id="nombre-categoria-ac" type="text" required class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base sm:leading-6 outline-none">
+            </div>
+        </div>
+
+        <div>
+            <label for="password" class="block text-base font-medium leading-6 text-gray-300">Estado</label>
+            <div class="mt-2 flex">
+                <select id="estado-categoria-ac" class="block w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 shadow-sm focus:ring-1 focus:ring-inset focus:ring-indigo-500 outline-none" disabled>
+                  <option value="si">Activo</option>
+                  <option value="no">Inactivo</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <button id="boton-actualizar" type="button" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 mt-14 text-base font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-sky-700">Actualizar</butto>
+        </div>
+      </form>
+    </dialog>
+
+    <template id="template-categorias">
+      <tr class="border-b border-slate-700 mb-2">
+        <td id="id-categoria" class="text-center text-base">1</td>
+        <td id="nombre-categoria" class="px-2.5 py-3 pr-36">Gaseoss</td>
+        <td class="px-2.5 py-3 text-base">
+          <span id="activo" class="text-base tracking-wider text-emerald-200 rounded-lg bg-opacity-50">Activo</span>
+          <span id="inactivo" class="hidden text-base tracking-wider text-rose-200 rounded-lg bg-opacity-50">Inactivo</span>
+        </td>
+        <td class="px-14 py-3 text-center">
+          <button id="boton-activar" class="hidden w-24 p-1.5 text-base tracking-wider text-green-200 bg-opacity-50 border border-green-300 rounded-lg hover:bg-green-600 hover:text-white transition">Activar</button>
+          <button id="boton-desactivar" class="p-1.5 w-24 text-base tracking-wider text-red-200 bg-opacity-50 border border-red-300 rounded-lg hover:bg-red-500 hover:text-white transition">Desactivar</button>
+        </td>
+        <td>
+          <button id="editar-categoria" class="px-2.5 py-1.5 text-amber-200 rounded-lg bg-opacity-50 hover:bg-amber-600 hover:text-white transition">Editar</button>
+        </td>
+      </tr>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/categoria.js"></script>
 </body>
 </html>

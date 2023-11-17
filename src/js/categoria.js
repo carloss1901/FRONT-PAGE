@@ -1,273 +1,285 @@
-const categoriaContainer = document.getElementById('categoriaContainer')
-const formularioEditar = document.getElementById('formularioEditar')
+const body = document.getElementById('body')
+const datosCategoria = document.getElementById('datos-categoria')
 
-const idCategoria = document.getElementById('idCategoria')
-const nombreCategoria = document.getElementById('nombreCategoria')
-const comboEstado = document.getElementById('estadoCategoria')
+const dialogActualizar = document.getElementById('dialog-actualizar')
+const dialogAgregar = document.getElementById('dialog-agregar')
 
-const nombreCategoriaR = document.getElementById('nombreCategoriaR')
+const botonActualizar = document.getElementById('boton-actualizar')
+const botonAgregar = document.getElementById('boton-agregar')
 
-const btnActualizar = document.getElementById('btnActualizar')
-const btnGuardar = document.getElementById('btnGuardarCategoria')
-const btnRegistrar = document.getElementById('btnRegistrar')
+const nombreCategoria = document.getElementById('nombre-categoria')
+const nombreCategoriaAc = document.getElementById('nombre-categoria-ac')
+const estadoCategoriaAc = document.getElementById('estado-categoria-ac')
 
-const userData = localStorage.getItem('userData')
-const ps = localStorage.getItem('ps')
+const templateCategorias = document.getElementById('template-categorias').content
 
-fetch("http://localhost:8080/categoria/listar")
-.then(response => response.json())
-.then(data => {
-  const tablaCategorias = document.createElement('table')
-  const thead = document.createElement('thead')
-  const tbody = document.createElement('tbody')
-  tablaCategorias.appendChild(thead)
-  tablaCategorias.appendChild(tbody)
+const fragment = document.createDocumentFragment()
 
-  const encabezadosRow = document.createElement('tr')
-  const encabezados = ['ID','NOMBRE','ESTADO','','']
+let routeCategorias = 'http://localhost:4000/api/categoria/listar'
+let routeDesactivarCat = 'http://localhost:4000/api/categoria/desactivar/'
+let routeActivarCat = 'http://localhost:4000/api/categoria/activar/'
+let routeAgregarCat = 'http://localhost:4000/api/categoria/registrar'
+let routeActualizarCat = 'http://localhost:4000/api/categoria/editar/'
 
-  encabezados.forEach(encabezado => {
-    const th = document.createElement('th')
-    th.textContent = encabezado
-    encabezadosRow.appendChild(th)
-  })
+document.addEventListener('DOMContentLoaded', function() {
+  fetchInitializer()
+  console.log("EL DOM se ha cargado completamente")
+})
 
-  thead.appendChild(encabezadosRow)
+const fetchInitializer = async () => {
+  try {
+    const [categoriasData] = await Promise.all([
+      fetchData(routeCategorias)
+    ])
+    
+    pintarCategorias(categoriasData)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const fetchData = async (ruta) => {
+  try {
+      const res = await fetch(ruta)
+      const data = await res.json()
+      return data
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+const pintarCategorias = data => {
+  datosCategoria.innerHTML = ''
 
   data.forEach(categoria => {
-    const filaCategoria = document.createElement('tr')
+    const clone = templateCategorias.cloneNode(true)
 
-    const idCategoria = document.createElement('td')
-    idCategoria.textContent = categoria.id_categoria
+    clone.querySelector('#id-categoria').textContent = categoria.id_categoria
+    clone.querySelector('#nombre-categoria').textContent = categoria.nombre
+    clone.querySelector('#boton-activar').dataset.id = categoria.id_categoria
+    clone.querySelector('#boton-desactivar').dataset.id = categoria.id_categoria
 
-    const nombreCategoria = document.createElement('td')
-    nombreCategoria.textContent = categoria.nombre
+    const spanActivo = clone.querySelector('#activo')
+    const spanInactivo = clone.querySelector('#inactivo')
+    const botonActivar = clone.querySelector('#boton-activar')
+    const botonDesactivar = clone.querySelector('#boton-desactivar')
+    const botonEditar = clone.querySelector('#editar-categoria')
 
-    const estadoCategoria = document.createElement('td')
-    estadoCategoria.textContent = categoria.vigencia ? "Activo" : "No Activo"
+    if(categoria.vigencia === false) {
+      spanActivo.classList.add('hidden')
+      spanInactivo.classList.remove('hidden')
+      botonDesactivar.classList.add('hidden')
+      botonActivar.classList.remove('hidden')
+    }
 
-    const editarCategoria = document.createElement('td')
-    const editarButton = document.createElement('button')
-    editarButton.textContent = 'Editar'
-    editarCategoria.appendChild(editarButton)
-
-    const eliminarCategoria = document.createElement('td')
-    const eliminarButton = document.createElement('button')
-
-    editarButton.addEventListener('click', (event) => {
-      formularioEditar.style.display = 'block'
-      event.stopPropagation()
-      datosEditar(categoria)
-      
-      const clickListener = (event) => {
-        if(!formularioEditar.contains(event.target)) {
-          formularioEditar.style.display = 'none'
-          document.removeEventListener('click', clickListener)
-        }
-      }
-      document.addEventListener('click', clickListener)
+    botonActivar.addEventListener('click', () => {
+      activarCategoria(categoria.id_categoria)
+    })
+    botonDesactivar.addEventListener('click', () => {
+      desactivarCategoria(categoria.id_categoria)
+    })
+    botonEditar.addEventListener('click', () => {
+      mostrarDialogActualizar(categoria)
     })
 
-    if(!categoria.vigencia) {
-      const activarButton = document.createElement('button')
-      activarButton.textContent = 'Activar'
-      activarButton.classList.add('btn','btn-info')
-      activarButton.style.fontWeight = 'bold'
-      eliminarCategoria.appendChild(activarButton)
-
-      activarButton.addEventListener('click', () => {
-        Swal.fire({
-          icon: 'warning',
-          title: '¿Seguro que quieres activar este producto?',
-          showCancelButton: true,
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar',
-          customClass: {
-            popup: 'swal.popup'
-          },
-          allowOutsideClick: false
-        }).then((result) => {
-          if(result.isConfirmed) {
-            activarCategoriaForm(categoria.id_categoria)
-          }
-        })
-      })
-      editarButton.disabled = true
-    } else {
-      eliminarButton.textContent = 'Desactivar'
-      eliminarCategoria.appendChild(eliminarButton)
-
-      eliminarButton.addEventListener('click', () => {
-        Swal.fire({
-          icon: 'warning',
-          title: '¿Seguro que quieres desactivar este categoría?',
-          showCancelButton: true,
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar',
-          customClass: {
-            popup: 'swal-popup'
-          },
-          allowOutsideClick: false
-        }).then((result) => {
-          if(result.isConfirmed) {
-            eliminarCategoriaForm(categoria.id_categoria)
-          }
-        })
-      })
-    }
-
-    idCategoria.classList.add('centrar')
-    estadoCategoria.classList.add('centrar')
-    editarCategoria.classList.add('centrar')
-    editarButton.classList.add('btn','btn-success')
-    editarButton.style.fontWeight = 'bold'
-    eliminarCategoria.classList.add('centrar')
-    eliminarButton.classList.add('btn','btn-danger')
-    eliminarButton.style.fontWeight = 'bold'
-
-    if(!categoria.vigencia) {
-      filaCategoria.classList.add('fila-inactiva')
-    }
-
-    filaCategoria.appendChild(idCategoria)
-    filaCategoria.appendChild(nombreCategoria)
-    filaCategoria.appendChild(estadoCategoria)
-    filaCategoria.appendChild(editarCategoria)
-    filaCategoria.appendChild(eliminarCategoria)
-
-    tbody.appendChild(filaCategoria)
+    fragment.appendChild(clone)
   })
-  categoriaContainer.appendChild(tablaCategorias)
-})
+  datosCategoria.appendChild(fragment)
+}
 
-btnActualizar.addEventListener('click', () => {
-  actualizarDatos()
-})
-btnGuardar.addEventListener('click', (event) => {
-  formularioRegistrar.style.display = 'block'
-  event.stopPropagation()
-  const clickListener = (event) => {
-    if(!formularioRegistrar.contains(event.target)) {
-      formularioRegistrar.style.display = 'none'
-      document.removeEventListener('click', clickListener)
-    }
-  }
-  document.addEventListener('click',clickListener)
-})
-btnRegistrar.addEventListener('click', () => {
-  validarCampos()
-  if(nombreCategoriaR.style.border === '') {
-    Swal.fire({
-      icon: 'warning',
-      title: '¿Seguro que quiere registrar esta categoría?',
-      showCancelButton: true,
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar',
-      customClass: {
-        popup: 'swal-popup'
-      },
-      allowOutsideClick: false
-    }).then((result) => {
-      if(result.isConfirmed) {guardarDatos()}
-    })
-   }
-})
+function agregarCategoria(nombreCat) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Agregar Categoría',
+    text: '¿Quieres agregar la categoría?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      const formData = {
+        nombre: nombreCat,
+        vigencia: true
+      }
 
-function guardarDatos() {
-  var categoria = {
-    nombre:nombreCategoriaR.value
-  }
-
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const auth = new Headers()
-      auth.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/categoria/registrar`, {
+      fetch(routeAgregarCat, {
         method: 'POST',
-        headers: {
-          'Content-Type' : 'application/json',
-          'Authorization': auth.get('Authorization')
-        },
-        body: JSON.stringify(categoria)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       })
-      .then(response => response.json())
-      .then(notificacionConfirmacion('success','Categoría Registrada','La categoría ha sido registrada con éxito.'))
-      .catch(error => {console.error('Error: ',error)})
-    })
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Categoría Agregada', 'La categoría ha sido agregada.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al agregar la categoría.') }
+      })
+      .catch(error => {
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
+      })
+    }
+  })
 }
-function actualizarDatos() {
-  var categoria = {
-    id_categoria: idCategoria.value,
-    nombre: nombreCategoria.value,
-    vigencia: comboEstado.value === 'si'
+function actualizarCategoria(categoria, nuevoNombre) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Actualizar Categoría',
+    text: '¿Quieres actualizar la categoría?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      const formData = {
+        nombre: nuevoNombre
+      }
+      
+      fetch(routeActualizarCat + `${categoria.id_categoria}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Categoría Actualizada', 'La categoría ha sido actualizada.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al actualizar la categoría.') }
+      })
+      .catch(error => {
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
+      })
+    }
+  })
+}
+
+function mostrarDialogAgregar() {
+  dialogAgregar.showModal()
+  body.classList.add('blur')
+  
+
+  botonAgregar.addEventListener('click', () => {
+    const nombreCat = nombreCategoria.value
+    if(nombreCat === '') {
+      errorInputAgregar()
+      return 
+    }
+    cerrarDialogAgregar()
+    agregarCategoria(nombreCat)
+  })
+}
+function cerrarDialogAgregar() {
+  limpiarEstilosAgregar()
+  dialogAgregar.close()
+  body.classList.remove('blur')
+}
+
+function mostrarDialogActualizar(categoria) {
+  dialogActualizar.showModal()
+  body.classList.add('blur')
+  
+  nombreCategoriaAc.value = categoria.nombre
+  estadoCategoriaAc.value = categoria.vigencia ? 'si' : 'no'
+
+  if(categoria.vigencia) { 
+    estadoCategoriaAc.classList.remove('text-rose-200')
+    estadoCategoriaAc.classList.add('text-green-200') 
+  }
+  else { 
+    estadoCategoriaAc.classList.remove('text-green-200')
+    estadoCategoriaAc.classList.add('text-rose-200') 
   }
 
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const auth = new Headers()
-      auth.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/categoria/editar/${idCategoria.value}`, {
-        method: 'PUT',
-        body: JSON.stringify(categoria),
-        headers: {
-          'Content-Type' : 'application/json',
-          'Authorization': auth.get('Authorization')
-        }
+  var nuevoNombre = nombreCategoriaAc.value
+
+  nombreCategoriaAc.addEventListener('input', function(event) {
+    nuevoNombre = event.target.value
+  })
+
+  botonActualizar.addEventListener('click', () => {
+    if(nuevoNombre.trim() === '') {
+      errorInputActualizar()
+      return
+    }
+    cerrarDialog()
+    actualizarCategoria(categoria, nuevoNombre)
+  })
+}
+function cerrarDialog() {
+  limpiarEstilosActualizar()
+  dialogActualizar.close()
+  body.classList.remove('blur')
+}
+
+function errorInputActualizar() {
+  nombreCategoriaAc.classList.add('border-rose-500')
+  nombreCategoriaAc.classList.add('placeholder-red-200')
+  nombreCategoriaAc.placeholder = 'Campo requerido !!!'
+}
+function limpiarEstilosActualizar() {
+  nombreCategoriaAc.classList.remove('border-rose-500')
+  nombreCategoriaAc.placeholder = ''
+}
+
+function errorInputAgregar() {
+  nombreCategoria.classList.add('border-rose-500')
+  nombreCategoria.classList.add('placeholder-red-200')
+  nombreCategoria.placeholder = 'Campo requerido !!!'
+}
+function limpiarEstilosAgregar() {
+  nombreCategoria.classList.remove('border-rose-500')
+  nombreCategoria.placeholder = ''
+}
+
+function desactivarCategoria(categoriaId) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Desactivar Categoría',
+    text: '¿Quieres desactivar la categoría?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      fetch(routeDesactivarCat + `${categoriaId}`, {
+        method: 'DELETE'
       })
-      .then(response => response.json())
-      .then(data => {
-        notificacionConfirmacion('success','Categoria Actualizada','La categoría ha sido actualizada con éxito.')
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Categoría Desactivada', 'La categoría ha sido desactivada.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al desactivar la categoría.') }
       })
       .catch(error => {
-        console.error('Error al editar la categoría',error)
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
       })
-    })
+    }
+  })
 }
-function datosEditar(categoria) {
-  idCategoria.value = categoria.id_categoria
-  nombreCategoria.value = categoria.nombre
-  comboEstado.value = categoria.vigencia ? 'si' : 'no'
-}
-function eliminarCategoriaForm(id) {
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const headers = new Headers()
-      headers.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/categoria/eliminar/${id}`, {
-        method: 'DELETE',
-        headers: headers
+function activarCategoria(categoriaId) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Activar Categoría',
+    text: '¿Quieres activar la categoría?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      fetch(routeActivarCat + `${categoriaId}`, {
+        method: 'DELETE'
       })
-      .then(response => response.json())
-      .then(data => {
-        notificacionConfirmacion('success','Categoría Desactivada','La categoría ha sido desactivada con éxito')
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Categoría Activada', 'La categoría ha sido activada.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al activar la categoría.') }
       })
       .catch(error => {
-        console.error("Error al desactivar la categoría: ",error)
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
       })
-    })
+    }
+  })
 }
-function activarCategoriaForm(id) {
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const headers = new Headers()
-      headers.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/categoria/activar/${id}`, {
-        method: 'DELETE',
-        headers: headers
-      })
-      .then(response => response.json())
-      .then(data => {
-        notificacionConfirmacion('success','Categoría Activada','La categoría ha sido activada con éxito')
-      })
-      .catch(error => {
-        console.error("Error al activar la categoría: ",error)
-      })
-    })
-}
+
 function notificacionConfirmacion(icon, title, text) {
   Swal.fire({
     icon: icon,
@@ -287,42 +299,7 @@ function notificacionConfirmacion(icon, title, text) {
     }
   })
 }
-function redireccionar() {
-  window.location.href = "../html/administrador.html"
-}
-function aplicarEstiloError(elemento) {
-  if(elemento.value === '') {
-    elemento.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-  } else {
-    elemento.style.boxShadow = ''
-  }
-}
-function validarCampos() {
-  aplicarEstiloError(nombreCategoriaR)
-}
-function desencriptar(password) {
-  let passwordDesencript = ""
-  for(let i = 0; i < password.length; i++) {
-    const caracter = password[i]
-    const valorAsci = caracter.charCodeAt(0)
-    const nuevoValorAsci = valorAsci - 30
-    const nuevoCaracter = String.fromCharCode(nuevoValorAsci)
-    passwordDesencript += nuevoCaracter
-  }
-  return passwordDesencript
-}
-function buscarUsuario(userId) {
-  return fetch(`http://localhost:8080/usuario/id/${userId}`)
-  .then(response => response.json())
-  .then(user => {
-    if(user && user.username) {
-      return user.username
-    } else {
-      throw new Error('No se encontró el nombre de usuario')
-    }
-  })
-  .catch(error => {
-    console.error('Error al obtener los datos del usuario: ', error)
-    throw error
-  })
+
+function volver() {
+  window.history.back()
 }
