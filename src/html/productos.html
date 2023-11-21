@@ -5,19 +5,200 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos</title>
-    <link rel="stylesheet" type="text/css" href="../css/producto.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-      <div class="back-button" onclick="redireccionar()">
-        <i class="fas fa-arrow-left arrow-icon"></i>
-        <span class="arrow-text">Volver</span>
+<body id="body" class="bg-slate-800">
+  <header class="bg-gray-800">
+    <button onclick="volver()" class="flex items-center gap-2 text-gray-200 px-3 py-2 hover:scale-110 ease-in-out transition">
+      <div class="p-1.5 rounded-full bg-gray-500 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
       </div>
-    </header>
+      <p class="font-semibold text-xl">Volver</p>
+    </button>
+  </header>
 
-    <div id="formularioEditar" style="display: none;">
+  <section class="bg-slate-800 my-5">
+    <div class="mx-auto max-w-7xl p-2 bg-slate-700 rounded-lg mt-1 mb-3">
+        <div class="flex gap-4 items-center h-16 ml-3">
+          <svg class="w-6 h-6 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z"/>
+            <path d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z"/>
+          </svg>
+          <p class="text-gray-100 font-semibold tracking-wider sm:text-3xl text-xl">PRODUCTOS</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="flex justify-between mx-auto max-w-7xl">
+    <h1></h1>
+    <button onclick="mostrarDialogAgregar()" class="bg-blue-600 hover:bg-blue-500 transition text-gray-200 font-semibold p-2.5 rounded-lg">Agregar producto</button>
+  </section>
+
+  <section class="flex justify-center text-gray-200 mt-1">
+    <table class="table-fixed">
+      <thead>
+        <tr>
+          <th class="border-b font-medium px-5 py-2.5 text-lg text-gray-200">#</th>
+          <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200 text-left">Nombre</th>
+          <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200">Precio</th>
+          <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200">Stock</th>
+          <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200">Estado</th>
+          <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200">Recomendado</th>
+          <th class="border-b font-medium px-2.5 py-2.5 text-lg text-gray-200">Categoría</th>
+          <th class="border-b"></th>
+          <th class="border-b"></th>
+        </tr>
+      </thead>
+      <tbody id="datos-producto"></tbody>
+    </table>
+  </section>
+
+  <dialog id="dialog-actualizar" class="p-3 bg-slate-800 w-[480px] rounded-lg border border-slate-700">
+    <div class="relative h-16 min-h-min">
+      <div class="flex items-center justify-between">
+        <h1 class="text-gray-200 text-2xl font-semibold underline decoration-sky-500 font-mono uppercase">Editar producto</h1>
+        <button onclick="cerrarDialogActualizar()" class="flex items-center justify-center rounded-md p-1.5 text-gray-400 border border-slate-600">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <form action="" class="space-y-5">
+      <div class="mx-auto">
+        <label for="nombre" class="block text-base font-medium leading-6 text-gray-300">Nombre</label>
+        <input id="nombre-producto-ac" type="text" required class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+      </div>
+
+      <div class="flex justify-between">
+        <div>
+          <label for="precio" class="block text-base font-medium leading-6 text-gray-300">Precio S/.</label>
+          <input id="precio-producto-ac" type="text" required class="block mt-2 w-32 rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+        </div>
+
+        <div>
+          <label for="stock" class="block text-base font-medium leading-6 text-gray-300">Stock</label>
+          <input id="stock-producto-ac" type="text" required class="block mt-2 w-32 rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+        </div>
+
+        <div>
+          <label for="estado" class="block text-base font-medium leading-6 text-gray-300">Estado</label>
+          <select id="estado-producto-ac" class="block w-32 mt-2 rounded-md border border-slate-700 py-2 p-3  text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 outline-none" disabled>
+            <option value="si">Activo</option>
+            <option value="no">Inactivo</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="recomedado" class="block text-base font-medium leading-6 text-gray-300">Recomendado</label>
+        <select id="recomendado-producto-ac" required class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none text-orange-200">
+          <option value="si">Recomendado</option>
+          <option value="no">----------------</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="nombre-categoria" class="block text-base font-medium leading-6 text-gray-300">Categoría</label>
+        <select id="nombre-categoria-ac" required class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none"></select>
+      </div>
+
+      <div>
+        <label for="imagen" class="block text-base font-medium leading-6 text-gray-300">Imagen</label>
+        <textarea id="imagen-producto-ac" class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none"></textarea>
+      </div>
+
+      <div>
+        <button id="boton-actualizar" type="button" class="flex w-full justify-center items-center rounded-md bg-indigo-500 px-3 py-1.5 mt-7 text-base font-semibold leading-6 text-white focus-visible:outline-2 focus-visible:outline-sky-700">Actualizar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dialog-agregar" class="p-3 bg-slate-800 w-[480px] rounded-lg border border-slate-700">
+    <div class="relative h-16 min-h-min">
+      <div class="flex items-center justify-between">
+        <h1 class="text-gray-200 text-2xl font-semibold underline decoration-sky-500 font-mono uppercase">Agregar Producto</h1>
+        <button onclick="cerrarDialogAgregar()" class="flex items-center justify-center rounded-md p-1.5 text-gray-400 border border-slate-600">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <form action="" class="space-y-5">
+      <div>
+        <label for="nombre" class="block text-base font-medium leading-6 text-gray-300">Nombre</label>
+        <input id="nombre-producto" type="text" required class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+      </div>
+
+      <div class="flex justify-between">
+        <div>
+          <label for="precio" class="block text-base font-medium leading-6 text-gray-300">Precio S/.</label>
+          <input id="precio-producto" type="text" required class="block mt-2 w-32 rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+        </div>
+
+        <div>
+          <label for="stock" class="block text-base font-medium leading-6 text-gray-300">Stock</label>
+          <input id="stock-producto" type="text" required class="block mt-2 w-32 rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+        </div>
+
+        <div>
+          <label for="recomendado" class="block text-base font-medium leading-6 text-gray-300">Recomendado</label>
+          <select id="recomendado-producto" class="block mt-2 w-38 rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none">
+            <option value="si">Recomendado</option>
+            <option value="no">----------------</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="categoria" class="block text-base font-medium leading-6 text-gray-300">Categoría</label>
+        <select id="nombre-categoria" class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none"></select>
+      </div>
+
+      <div>
+        <label for="imagen" class="block text-base font-medium leading-6 text-gray-300">Imagen</label>
+        <textarea id="imagen-producto" class="block mt-2 w-full rounded-md border border-slate-700 py-2 p-3 text-gray-300 bg-gray-800 focus:ring-1 focus:ring-inset focus:ring-indigo-500 text-base leading-6 outline-none"></textarea>
+      </div>
+
+      <div>
+        <button id="boton-agregar" type="button" class="flex w-full justify-center items-center rounded-md bg-indigo-500 px-3 py-1.5 mt-7 text-base font-semibold leading-6 text-white focus-visible:outline-2 focus-visible:outline-sky-700">Agregar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="template-productos">
+    <tr class="border-b border-slate-700">
+      <td id="id-producto" class="text-center text-base">1</td>
+      <td id="nombre-producto" class="px-2.5 py-5 pr-20 text-base">Chocolate Winter - 800gr</td>
+      <td class="px-5 text-center text-base text-green-400 bg-opacity-50">S/. <span id="precio-producto">20.00</span></td>
+      <td id="stock-producto" class="px-5 text-center text-base">100</td>
+      <td class="px-5 text-center">
+        <span id="activo" class="text-base tracking-wider text-emerald-200 rounded-lg bg-opacity-50">Activo</span>
+        <span id="inactivo" class="hidden text-base tracking-wider text-rose-200 rounded-lg bg-opacity-50">Inactivo</span>
+      </td>
+      <td class="px-5 text-center">
+        <span id="recomendado" class="text-base text-orange-200 font-medium">Recomendado</span>
+        <span id="no-r" class="hidden font-medium text-orange-200">----------------</span>
+      </td>
+      <td id="nombre-categoria" class="px-5 text-center text-base">Gaseosas</td>
+      <td class="px-5 text-center">
+        <button id="boton-activar" class="hidden p-1.5 w-24 text-base tracking-wider text-green-200 bg-opacity-50 border border-green-300 rounded-lg hover:bg-green-600 hover:text-white transition">Activar</button>
+        <button id="boton-desactivar" class="p-1.5 w-24 text-base tracking-wider text-red-200 bg-opacity-50 border border-red-300 rounded-lg hover:bg-red-500 hover:text-white transition">Desactivar</button>
+      </td>
+      <td>
+        <button id="editar-producto" class="px-2.5 py-1.5 text-amber-200 rounded-lg bg-opacity-50 hover:bg-amber-600 hover:text-white transition">Editar</button>
+      </td>
+    </tr>
+  </template>
+  <template id="template-categorias">
+    <option id="name-categoria"></option>
+  </template>
+    <!-- <div id="formularioEditar" style="display: none;">
       <form>
         <h1 style="text-align: center;">Editar Producto</h1>
         <br>
@@ -108,7 +289,7 @@
         <button class="btn btn-primary" id="btnGuardarProducto"><strong>Agregar Nuevo Producto</strong></button>
       </div>
       <div id="productoContainer"></div>
-    </div>
+    </div> -->
 
     <script src="../js/producto.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

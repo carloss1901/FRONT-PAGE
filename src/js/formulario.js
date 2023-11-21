@@ -10,6 +10,7 @@ const direccionInput = document.getElementById('direccionInput')
 
 const miBoton = document.getElementById('miBoton')
 
+let routeRegistrarU = 'http://localhost:4000/api/usuario/registrar'
 
 togglePassword.addEventListener('click', function() {
     if(passwordInput.type === 'password') {
@@ -21,73 +22,147 @@ togglePassword.addEventListener('click', function() {
     }
 })
 
-miBoton.addEventListener("click", function() {
-    notificacionConfirmacion()
+usernameInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
+})
+passwordInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
+})
+nombresInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
+})
+apellidosInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
+})
+dniInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
+})
+celularInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
+})
+direccionInput.addEventListener('input', function() {
+  if(this.value.trim() != '') {
+    quitarEstilosError(this)
+  }
 })
 
-// submitForm.addEventListener('click', function(event) {
-//     event.preventDefault()
-//     validarCampos()
-//     if(usernameInput.style.boxShadow === '' &&
-//     passwordInput.style.boxShadow === '' &&
-//     nombresInput.style.boxShadow === '' &&
-//     apellidosInput.style.boxShadow === '' &&
-//     dniInput.style.boxShadow === '' &&
-//     celularInput.style.boxShadow === '' &&
-//     direccionInput.style.boxShadow === '') {
-//         const {value: username } = usernameInput
-//         const {value: password } = passwordInput
-//         const {value: nombres } = nombresInput
-//         const {value: apellidos } = apellidosInput
-//         const {value: dni } = dniInput
-//         const {value: celular } = celularInput
-//         const {value: direccion } = direccionInput
-//         const estado = 1
-//         const rol = 2
+miBoton.addEventListener('click', function() {
+  var usernameData = usernameInput.value
+  var passwordData = passwordInput.value
+  var nombresData = nombresInput.value
+  var apellidosData = apellidosInput.value
+  var dniData = dniInput.value
+  var celularData = celularInput.value
+  var direccionData = direccionInput.value
 
-//         const formData = {
-//             username: username,
-//             clave: password,
-//             nombres: nombres,
-//             apellidos: apellidos,
-//             dni: dni,
-//             celular: celular,
-//             direccion: direccion,
-//             estado: estado,
-//             itemsRol: [{
-//                 id_rol: rol
-//             }]
-//         }
+  if(usernameData.trim() === '' && passwordData.trim() === '' && nombresData.trim() === '' && apellidosData.trim() === '' && dniData.trim() === '' && celularData.trim() === '' && direccionData.trim() === '') {
+    errorInput(usernameInput)
+    errorInput(passwordInput)
+    errorInput(nombresInput)
+    errorInput(apellidosInput)
+    errorInput(dniInput)
+    errorInput(celularInput)
+    errorInput(direccionInput)
+    return
+  }
+  if(usernameData.trim() === '') {
+    errorInput(usernameInput)
+    return
+  }
+  if(passwordData.trim() === '') {
+    errorInput(passwordInput)
+    return
+  }
+  if(nombresData.trim() === '') {
+    errorInput(nombresInput)
+    return
+  }
+  if(apellidosData.trim() === '') {
+    errorInput(apellidosInput)
+    return
+  }
+  if(dniData.trim() === '') {
+    errorInput(dniInput)
+    return
+  }
+  if(dniData.trim().length !== 8) {
+    errorInput(dniInput)
+    mostrarError('El DNI debe ser de 8 dígitos.')
+    return
+  }
+  if(celularData.trim() === '') {
+    errorInput(celularInput)
+    return
+  }
+  if(celularData.trim().length !== 9) {
+    errorInput(celularInput)
+    mostrarError('El celular debe ser de 9 dígitos.')
+    return
+  }
+  if(direccionData.trim() === '') {
+    errorInput(direccionInput)
+    return
+  }
 
-//         fetch('http://localhost:8080/usuario/registrar', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(formData)
-//         })
-//         .then(response => {
-//             if(response.status === 409) {
-//                 usernameEnUso()
-//             } else if(response.status === 400) {
-//                 dniEnUso()
-//             } else if(response.status === 404) {
-//                 celularEnUso()
-//             } else if(response.status === 200) {
-//                 notificacionConfirmacion()
-//                 limpiarCampos()
-//                 setTimeout(() => {
-//                     irLogin()
-//                 }, 1200)
-//             }
-//         })
-//         .catch(error => {
-//             console.error(error)
-//         })
-//     } else {
-//         notificacionError()
-//     }
-// })
+  const formData = {
+    username: usernameData,
+    clave: passwordData,
+    nombres: nombresData,
+    apellidos: apellidosData,
+    dni: dniData,
+    celular: celularData,
+    direccion: direccionData,
+    estado: true
+  }
+  
+  //registrarUsuario(formData)
+})
+
+function errorInput(inputElement) {
+  inputElement.classList.add('border-rose-500')
+  inputElement.classList.add('placeholder-red-200')
+  inputElement.placeholder = 'Campo requerido !!!'
+}
+function quitarEstilosError(inputElement) {
+  inputElement.classList.remove('border-rose-500')
+  inputElement.classList.remove('placeholder-red-200')
+  inputElement.placeholder = ''
+}
+
+function registrarUsuario(formData) {
+  fetch(routeRegistrarU, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  })
+  .then(response => {
+    if(response.status === 409) { mostrarError('El username ya está registrado. Intente con otro') }
+    if(response.status === 404) { mostrarError('El celular ya está registrado. Intente con otro.') }
+    if(response.status === 400) { mostrarError('El DNI ya está registrado. Intente con otro.') }
+    if(response.status === 200) {
+      notificacionConfirmacion()
+      limpiarCampos()
+      setTimeout(() => {
+        irLogin()
+      }, 1300)
+    }
+  })
+  .catch(error => {
+    console.error(error)
+  })
+}
 
 function filtrarNumeros(event) {
     const input = event.target
@@ -102,6 +177,7 @@ function filtrarNumeros(event) {
       
       input.value = value
 }
+
 function filtrarNumerosDNI(event) {
     const input = event.target
     const regex = /[^0-9]/g
@@ -109,17 +185,19 @@ function filtrarNumerosDNI(event) {
     value = value.slice(0, 8)
     input.value = value
 }
+
 function soloLetras(event) {
     const input = event.target
     const regex = /[0-9]/
     let value = input.value.replace(regex, '')
     input.value = value
 }
+
 function notificacionConfirmacion() {
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Creíste que funcionaría? xD .. Báñate si? :)',
+        title: 'Se ha registrado con éxito.',
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -130,91 +208,33 @@ function notificacionConfirmacion() {
         }
       });
 }
-function notificacionError() {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'error',
-      title: 'Debe completar todos los campos :(',
-      showConfirmButton: false,
-      timer: 1500,
-      toast: true,
-      background: '#fff0f0',
-      iconColor: '#FF0000',
-      customClass: {
-        popup: 'animated slideInRight'
-      }
-    });
-}
-function usernameEnUso() {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'error',
-      title: 'El username ya está registrado. Intente con otro',
-      showConfirmButton: false,
-      timer: 1500,
-      toast: true,
-      background: '#fff0f0',
-      iconColor: '#FF0000',
-      customClass: {
-        popup: 'animated slideInRight'
-      }
-    })
-    usernameInput.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-}
-function dniEnUso() {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'error',
-      title: 'El DNI ya está registrado. Intente con otro',
-      showConfirmButton: false,
-      timer: 1500,
-      toast: true,
-      background: '#fff0f0',
-      iconColor: '#FF0000',
-      customClass: {
-        popup: 'animated slideInRight'
-      }
-    })
-    dniInput.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-}
-function celularEnUso() {
-    Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: 'El celular ya está registrado. Intente con otro',
-        showConfirmButton: false,
-        timer: 1500,
-        toast: true,
-        background: '#fff0f0',
-        iconColor: '#FF0000',
-        customClass: {
-          popup: 'animated slideInRight'
-        }
-      })
-      celularInput.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-}
-function limpiarCampos() {
-    document.getElementById('usernameInput').value = ""
-    document.getElementById('passwordInput').value = ""
-    document.getElementById('nombresInput').value = ""
-    document.getElementById('apellidosInput').value = ""
-    document.getElementById('dniInput').value = ""
-    document.getElementById('celularInput').value = ""
-    document.getElementById('direccionInput').value = ""
-}
-function aplicarEstilosError(elemento) {
-    if(elemento.value === '') {
-        elemento.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-    } else {
-        elemento.style.boxShadow = ''
+
+function mostrarError(mensaje) {
+  Swal.fire({
+    position: 'top-end',
+    icon: 'error',
+    title: mensaje,
+    showConfirmButton: false,
+    timer: 1500,
+    toast: true,
+    background: '#fff0f0',
+    iconColor: '#FF0000',
+    customClass: {
+      popup: 'animated slideInRight'
     }
+  })
 }
-function validarCampos() {
-    aplicarEstilosError(usernameInput)
-    aplicarEstilosError(passwordInput)
-    aplicarEstilosError(nombresInput)
-    aplicarEstilosError(apellidosInput)
-    aplicarEstilosError(dniInput)
-    aplicarEstilosError(celularInput)
-    aplicarEstilosError(direccionInput)
+
+function limpiarCampos() {
+    usernameInput.value = ''
+    passwordInput.value = ''
+    nombresInput.value = ''
+    apellidosInput.value = ''
+    dniInput.value = ''
+    celularInput.value = ''
+    direccionInput.value = ''
+}
+
+function irLogin() {
+  window.location.href = "../html/login.html"
 }

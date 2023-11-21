@@ -5,6 +5,12 @@ const togglePassword = document.getElementById('togglePassword')
 
 let routeLogin = 'http://localhost:4000/api/login/ingresar'
 
+document.addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') {
+        loginButton.click()
+    }
+})
+
 togglePassword.addEventListener('click', function() {
     if(passwordInput.type === 'password') {
         passwordInput.type = 'text'
@@ -26,60 +32,8 @@ loginButton.addEventListener('click', function() {
     }
 
     loguearse(formData)
-    // event.preventDefault();
-    // if(!validarCampos()) {
-    //     return
-    // }
-
-    // const usernameInput = document.getElementById('usernameInput');
-    // const passwordInput = document.getElementById('passwordInput');
-
-    // const username = usernameInput.value;
-    // const password = passwordInput.value;
-
-    // const formData = {
-    //     username: username,
-    //     password: password
-    // }
-
-    // fetch('http://localhost:8080/login', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(formData)
-    // })
-    // .then(response => {
-    //     if(response.status === 200) {
-    //         return response.json()
-    //     } else if(response.status === 401) {
-    //         notificacionDenegacion()
-    //         usernameInput.classList.add('input-error')
-    //         passwordInput.classList.add('input-error')
-    //     } else {
-    //         throw new Error("Error en la solicitud")
-    //     }
-    // })
-    // .then(data => {
-    //     const passEncript = encriptar(password)
-    //     localStorage.setItem('userData', data.id_usuario)
-    //     localStorage.setItem('ps', passEncript)
-    //     localStorage.setItem('nm', data.nombres)
-    //     limpiarCampos()
-    //     notificacionConfirmacion(data.nombres)
-    //     console.log(data.itemsRol[0].id_rol)
-    //     setTimeout(() => {
-    //         if(data.itemsRol[0].id_rol === 1) {
-    //             irAdmin()
-    //         } else {
-    //             irCatalogo()
-    //         }
-    //     }, 1200)
-    // })
-    // .catch(error => {
-    //     console.error(error);
-    // })
 })
+
 function loguearse(formData) {
     fetch(routeLogin, {
         method: 'POST',
@@ -92,7 +46,6 @@ function loguearse(formData) {
         else { throw new Error("Error en la solicitud") }
     })
     .then(data => {
-        console.log(data)
         const passEncript = encriptar(passwordInput.value)
         localStorage.setItem('uI', data.id_usuario)
         localStorage.setItem('ps', passEncript)
@@ -106,6 +59,7 @@ function loguearse(formData) {
     })
     .catch(error => { console.error(error) })
 }
+
 function validarCampos() {
     const usernameInput = document.getElementById('usernameInput')
     const passwordInput = document.getElementById('passwordInput')
@@ -130,6 +84,7 @@ function validarCampos() {
 
     return true
 }
+
 function notificacionConfirmacion(nombreUsuario) {
     Swal.fire({
         position: 'top-end',

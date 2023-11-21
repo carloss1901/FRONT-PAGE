@@ -1,399 +1,430 @@
-const productoContainer = document.getElementById('productoContainer')
-const formularioEditar = document.getElementById('formularioEditar')
-const formularioRegistrar = document.getElementById('formularioRegistrar')
-
-const comboCategoria = document.getElementById('categoriaProducto')
-const idProducto = document.getElementById('idProducto')
-const nombreProducto = document.getElementById('nombreProducto')
-const precioProducto = document.getElementById('precioProducto')
-const stockProducto = document.getElementById('stockProducto')
-const imagenProducto = document.getElementById('imagenProducto')
-const comboEstado = document.getElementById('estadoProducto')
-const comboRecomendado = document.getElementById('recomendadoProducto')
-
-const comboCategoriaR = document.getElementById('categoriaProductoR')
-const nombreProductoR = document.getElementById('nombreProductoR')
-const precioProductoR = document.getElementById('precioProductoR')
-const stockProductoR = document.getElementById('stockProductoR')
-const imagenProductoR = document.getElementById('imagenProductoR')
-const comboEstadoR = document.getElementById('estadoProductoR')
-const comboRecomendadoR = document.getElementById('recomendadoProductoR')
-
-const btnActualizar = document.getElementById('btnActualizar')
-const btnRegistrar = document.getElementById('btnRegistrar')
-const btnGuardar = document.getElementById('btnGuardarProducto')
-
 const userData = localStorage.getItem('userData') 
 const ps = localStorage.getItem('ps')
 
-fetch('http://localhost:8080/producto/listar')
-.then(response => response.json())
-.then(data => {
-  const tablaProductos = document.createElement('table')
+const body = document.getElementById('body')
+const datosProducto = document.getElementById('datos-producto')
 
-  const thead = document.createElement('thead')
-  const tbody = document.createElement('tbody')
-  tablaProductos.appendChild(thead)
-  tablaProductos.appendChild(tbody)
+const botonActualizar = document.getElementById('boton-actualizar')
+const botonAgregar = document.getElementById('boton-agregar')
 
-  const encabezadosRow = document.createElement('tr')
-  const encabezados = ['ID','NOMBRE','PRECIO','STOCK','ESTADO','RECOMENDADO','CATEGORÍA','','']
+const dialogActualizar = document.getElementById('dialog-actualizar')
+const dialogAgregar = document.getElementById('dialog-agregar')
 
-  encabezados.forEach(encabezado => {
-    const th = document.createElement('th')
-    th.textContent = encabezado
-    encabezadosRow.appendChild(th)
-  })  
+const nombreProducto = document.getElementById('nombre-producto')
+const precioProducto = document.getElementById('precio-producto')
+const stockProducto = document.getElementById('stock-producto')
+const recomendadoProducto = document.getElementById('recomendado-producto')
+const imagenProducto = document.getElementById('imagen-producto')
+const categoriasProducto = document.getElementById('nombre-categoria')
 
-  thead.appendChild(encabezadosRow)
+const nombreProductoAc = document.getElementById('nombre-producto-ac')
+const precioProductoAc = document.getElementById('precio-producto-ac')
+const stockProductoAc = document.getElementById('stock-producto-ac')
+const estadoProductoAc = document.getElementById('estado-producto-ac')
+const recomendadoProductoAc = document.getElementById('recomendado-producto-ac')
+const imagenProductoAc = document.getElementById('imagen-producto-ac')
+const categorias = document.getElementById('nombre-categoria-ac')
+
+const templateProductos = document.getElementById('template-productos').content
+const templateCategorias = document.getElementById('template-categorias').content
+
+const fragment = document.createDocumentFragment()
+
+let routeProductos = 'http://localhost:4000/api/producto/listar'
+let routeCategorias = 'http://localhost:4000/api/categoria/listar/ac'
+let routeActivarProd = 'http://localhost:4000/api/producto/activar/'
+let routeDesactivarProd = 'http://localhost:4000/api/producto/desactivar/'
+let routeAgregarProd = 'http://localhost:4000/api/producto/registrar'
+let routeActualizarProd = 'http://localhost:4000/api/producto/editar/'
+
+document.addEventListener('DOMContentLoaded', function() {
+  fetchInitializer()
+
+  document.addEventListener('keydown', event => {
+    if(event.key === 'Escape') {
+      body.classList.remove('blur')
+    }
+  })
+  valorCeroPrecio(precioProductoAc)
+  valorCeroStock(stockProductoAc)
+  valorCeroPrecioAg(precioProducto)
+  valorStockAg(stockProducto)
+
+  console.log("EL DOM se ha cargado completamente")
+})
+
+const fetchInitializer = async () => {
+  try {
+    const [productosData, categoriasData] = await Promise.all([
+      fetchData(routeProductos),
+      fetchData(routeCategorias)
+    ])
+    
+    pintarProductos(productosData)
+    pintarCategorias(categoriasData)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const fetchData = async (ruta) => {
+  try {
+      const res = await fetch(ruta)
+      const data = await res.json()
+      return data
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+const pintarCategorias = data => {
+  categorias.innerHTML = ''
+  categoriasProducto.innerHTML = ''
+
+  data.forEach(categoria => {
+    const clone = templateCategorias.cloneNode(true).querySelector('option')
+
+    clone.textContent = categoria.nombre
+    clone.value = categoria.id_categoria
+
+    const clone2 = clone.cloneNode(true)
+
+    fragment.appendChild(clone)
+    categoriasProducto.appendChild(clone2)
+  })
+  categorias.appendChild(fragment)
+}
+const pintarProductos = data => {
+  datosProducto.innerHTML = ''
 
   data.forEach(producto => {
-    const filaProducto = document.createElement('tr')
+    const clone = templateProductos.cloneNode(true)
 
-    const idProducto = document.createElement('td')
-    idProducto.textContent = producto.id_producto
+    clone.querySelector('#id-producto').textContent = producto.id_producto
+    clone.querySelector('#nombre-producto').textContent = producto.nombre
+    clone.querySelector('#precio-producto').textContent = producto.precio.toFixed(2)
+    clone.querySelector('#stock-producto').textContent = producto.stock
+    clone.querySelector('#nombre-categoria').textContent = producto.categoria.nombre
 
-    const nombreProducto = document.createElement('td')
-    nombreProducto.textContent = producto.nombre
+    estadoVigencia(producto, clone, producto.id_producto)
+    estadoRecomendado(producto, clone)
 
-    const precioProducto = document.createElement('td')
-    precioProducto.textContent = `${producto.precio.toLocaleString("es-PE", { style: "currency", currency: "PEN" })}`
+    const botonEditar = clone.querySelector('#editar-producto')
 
-    const stockProducto = document.createElement('td')
-    stockProducto.textContent = producto.stock
-
-    const estadoProducto = document.createElement('td')
-    estadoProducto.textContent = producto.vigencia ? "Activo" : "No activo"
-
-    const recomendadoProducto = document.createElement('td')
-    recomendadoProducto.textContent = producto.recomendado ? "Si" : "No"
-
-    const categoriaProducto = document.createElement('td')
-    categoriaProducto.textContent = producto.categoria.nombre
-
-    const editarProducto = document.createElement('td')
-    const editarButton = document.createElement('button')
-    editarButton.textContent = 'Editar'
-    editarProducto.appendChild(editarButton)
-
-    const eliminarProducto = document.createElement('td')
-    const eliminarButton = document.createElement('button')
-
-    editarButton.addEventListener('click', (event) => {
-      formularioEditar.style.display = 'block'
-      event.stopPropagation()
-      datosEditar(producto)
-      
-      const clickListener = (event) => {
-        if (!formularioEditar.contains(event.target)) {
-          formularioEditar.style.display = 'none'
-          document.removeEventListener('click', clickListener)
-        }
-      }
-      document.addEventListener('click', clickListener)
+    botonEditar.addEventListener('click', () => {
+      mostrarDialogActualizar(producto)
     })
 
-    if(!producto.vigencia) {
-      const activarButton = document.createElement('button')
-      activarButton.textContent = 'Activar'
-      activarButton.classList.add('btn','btn-info')
-      activarButton.style.fontWeight = 'bold'
-      eliminarProducto.appendChild(activarButton)
-
-      activarButton.addEventListener('click', () => {
-        Swal.fire({
-          icon: 'warning',
-          title: '¿Seguro que quieres activar este producto?',
-          showCancelButton: true,
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar',
-          customClass: {
-            popup: 'swal-popup'
-          },
-          allowOutsideClick: false
-        }).then((result) => {
-          if(result.isConfirmed) {
-            activarProductoForm(producto.id_producto)
-          }
-        })
-      })
-      editarButton.disabled = true
-    } else {
-      eliminarButton.textContent = 'Desactivar'
-      eliminarProducto.appendChild(eliminarButton)
-      
-      eliminarButton.addEventListener('click', () => {
-        Swal.fire({
-          icon: 'warning',
-          title: '¿Seguro que quieres eliminar este producto?',
-          showCancelButton: true,
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar',
-          customClass: {
-            popup: 'swal-popup',
-            confirmButton: 'btn btn-danger',
-            cancelButton: 'btn btn-secondary'
-          },
-          allowOutsideClick: false
-        }).then((result) => {
-          if (result.isConfirmed) {
-            eliminarProductoForm(producto.id_producto);
-          }
-        })
-      })
-    }
-
-    idProducto.classList.add('centrar')
-    precioProducto.classList.add('centrar')
-    stockProducto.classList.add('centrar')
-    estadoProducto.classList.add('centrar') 
-    recomendadoProducto.classList.add('centrar')
-    categoriaProducto.classList.add('centrar')
-    editarProducto.classList.add('centrar')
-    eliminarProducto.classList.add('centrar')
-    editarButton.classList.add('btn','btn-success')
-    editarButton.style.fontWeight = 'bold'
-    eliminarButton.classList.add('btn','btn-danger')
-    eliminarButton.style.fontWeight = 'bold'
-
-    if(!producto.vigencia) {
-      filaProducto.classList.add('fila-inactiva')
-    } 
-
-    filaProducto.appendChild(idProducto)
-    filaProducto.appendChild(nombreProducto)
-    filaProducto.appendChild(precioProducto)
-    filaProducto.appendChild(stockProducto)
-    filaProducto.appendChild(estadoProducto)
-    filaProducto.appendChild(recomendadoProducto)
-    filaProducto.appendChild(categoriaProducto)
-    filaProducto.appendChild(editarProducto)
-    filaProducto.appendChild(eliminarProducto)
-
-    tbody.appendChild(filaProducto)
+    fragment.appendChild(clone)
   })
-  productoContainer.appendChild(tablaProductos)
-})
-.catch(error => {
-  console.error('Error al obtener los datos de los productos: ',error)
-})
-
-btnActualizar.addEventListener('click', () => {
-  actualizarDatos();
-})
-btnGuardar.addEventListener('click', (event) => {
-  formularioRegistrar.style.display = 'block'
-  comboboxCategoriaR()
-      event.stopPropagation()
-      const clickListener = (event) => {
-        if (!formularioRegistrar.contains(event.target)) {
-          formularioRegistrar.style.display = 'none';
-          document.removeEventListener('click', clickListener)
-        }
-      }
-      document.addEventListener('click', clickListener)
-})
-btnRegistrar.addEventListener('click', () => {
-  validarCampos()
-  if(nombreProductoR.style.boxShadow === '' &&
-  precioProductoR.style.boxShadow === '' &&
-  stockProductoR.style.boxShadow === '' &&
-  imagenProductoR.style.boxShadow === '') {
-    Swal.fire({
-      icon: 'warning',
-      title: '¿Seguro que quiere registrar este producto?',
-      showCancelButton: true,
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar',
-      customClass: {
-        popup: 'swal-popup'
-      },
-      allowOutsideClick: false
-    }).then((result) => {
-      if(result.isConfirmed) {guardarProducto()}
-    })
-  }
-})
-
-function guardarProducto() {
-    var producto = {
-      nombre: nombreProductoR.value,
-      precio: parseFloat(precioProductoR.value),
-      stock: parseInt(stockProductoR.value),
-      imagen: imagenProductoR.value,
-      vigencia: comboEstadoR.value === 'si',
-      recomendado: comboRecomendadoR.value === 'si',
-      categoria: { id_categoria: comboCategoriaR.value }
-    }
-    
-    buscarUsuario(userData)
-      .then(username => {
-        const c = desencriptar(ps)
-        const auth = new Headers()
-        auth.append('Authorization','Basic ' + btoa(username + ":" + c))
-        fetch('http://localhost:8080/producto/registrar', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': auth.get('Authorization')
-          },
-          body: JSON.stringify(producto)
-        })
-        .then(response => response.json())
-        .then(data => {
-          notificacionConfirmacion('success','Producto Registrado','El producto ha sido registrado con éxito')
-        })
-        .catch(error => {
-          console.error('Error: ',error)
-        })
-      })  
+  datosProducto.appendChild(fragment)
 }
-function actualizarDatos() {
-  var precioSinFormato = parseFloat(precioProducto.value.replace(/[^0-9.-]+/g,""))
-  var producto = {
-    id_producto: idProducto.value,
-    nombre: nombreProducto.value,
-    precio: precioSinFormato,
-    stock: parseInt(stockProducto.value),
-    imagen: imagenProducto.value,
-    vigencia: comboEstado.value === 'si',
-    recomendado: comboRecomendado.value === 'si',
-    categoria: { id_categoria: comboCategoria.value }
-  };
 
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const auth = new Headers()
-      auth.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/producto/editar/${idProducto.value}`, {
+const estadoVigencia = (producto, clone, id) => {
+  const spanActivo = clone.querySelector('#activo')
+  const spanInactivo = clone.querySelector('#inactivo')
+  const botonActivar = clone.querySelector('#boton-activar')
+  const botonDesactivar = clone.querySelector('#boton-desactivar')
+
+  botonActivar.addEventListener('click', () => {
+    activarProducto(id)
+  })
+  botonDesactivar.addEventListener('click', () => {
+    desactivarProducto(id)
+  })
+
+  if(producto.vigencia === false) {
+    spanActivo.classList.add('hidden')
+    spanInactivo.classList.remove('hidden')
+    botonDesactivar.classList.add('hidden')
+    botonActivar.classList.remove('hidden')
+  }
+}
+const estadoRecomendado = (producto, clone) => {
+  const spanRecomendado = clone.querySelector('#recomendado')
+  const spanNoR = clone.querySelector('#no-r')
+  
+  if(producto.recomendado === false) {
+    spanRecomendado.classList.add('hidden')
+    spanNoR.classList.remove('hidden')
+  }
+}
+
+function desactivarProducto(productoId) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Desactivar Producto',
+    text: '¿Quieres desactivar el producto?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      fetch(routeDesactivarProd + `${productoId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Producto Desactivado', 'El producto ha sido desactivado.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al desactivar el producto.') }
+      })
+      .catch(error => {
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
+      }) 
+    }
+  })
+}
+function activarProducto(productoId) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Activar Producto',
+    text: '¿Quieres activar el producto?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      fetch(routeActivarProd + `${productoId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Producto Activado', 'El producto ha sido activado.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al activar el producto.') }
+      })
+      .catch(error => {
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
+      })
+    }
+  })
+}
+
+function mostrarDialogActualizar(producto) {
+  dialogActualizar.showModal()
+  body.classList.add('blur')  
+
+  nombreProductoAc.value = producto.nombre
+  precioProductoAc.value = producto.precio.toFixed(2)
+  stockProductoAc.value = producto.stock
+  estadoProductoAc.value = producto.vigencia ? 'si' : 'no'
+  recomendadoProductoAc.value = producto.recomendado ? 'si' : 'no'
+  imagenProductoAc.value = producto.imagen
+  categorias.value = producto.categoria.id_categoria
+
+  if(producto.vigencia) {
+    estadoProductoAc.classList.remove('text-rose-200')
+    estadoProductoAc.classList.add('text-green-200')
+  } else {
+    estadoProductoAc.classList.remove('text-green-200')
+    estadoProductoAc.classList.add('text-rose-200')
+  }
+
+  var nuevoNombre = nombreProductoAc.value
+  var nuevoPrecio = parseFloat(precioProductoAc.value)
+  var nuevoStock = parseInt(stockProductoAc.value)
+  var nuevaImagen = imagenProductoAc.value
+  var nuevoRecomendado = recomendadoProductoAc.value
+  var nuevaCategoria = parseInt(categorias.value)
+
+  nombreProductoAc.addEventListener('input', function(event) {
+    nuevoNombre = event.target.value
+  })
+  precioProductoAc.addEventListener('input', function(event) {
+    nuevoPrecio = parseFloat(event.target.value)
+  })
+  stockProductoAc.addEventListener('input', function(event) {
+    nuevoStock = parseInt(event.target.value)
+  })
+  recomendadoProductoAc.addEventListener('change', function(event) {
+    nuevoRecomendado = event.target.value === 'si' ? true : false
+  })
+  imagenProductoAc.addEventListener('input', function(event) {
+    nuevaImagen = event.target.value
+  })
+  categorias.addEventListener('change', function(event) {
+    nuevaCategoria = parseInt(event.target.value)
+  })
+
+  botonActualizar.addEventListener('click', () => {
+    let nombreVacio = nuevoNombre.trim() === ''
+    let imagenVacia = nuevaImagen.trim() === ''
+
+    if(nombreVacio && imagenVacia) {
+      errorInput(nombreProductoAc)
+      errorInput(imagenProductoAc)
+      return
+    }
+    if (nombreVacio) {
+      errorInput(nombreProductoAc)
+      return
+    }
+    if (imagenVacia) {
+      errorInput(imagenProductoAc)
+      return
+    }
+
+    cerrarDialogActualizar()
+    actualizarProducto(producto.id_producto, nuevoNombre, nuevoPrecio, nuevoStock, nuevaImagen, nuevoRecomendado, nuevaCategoria)
+  })
+}
+function errorInput(inputElement) {
+  inputElement.classList.add('border-rose-500')
+  inputElement.classList.add('placeholder-red-200')
+  inputElement.placeholder = 'Campo requerido !!!'
+}
+function limpiarEstiloActualizar() {
+  const elements = document.querySelectorAll('#dialog-actualizar input, #dialog-actualizar textarea')
+  
+  elements.forEach((elemento) => {
+    elemento.classList.remove('border-rose-500')
+    elemento.classList.remove('placeholder-red-200')
+    elemento.placeholder = ''
+  })
+}
+function cerrarDialogActualizar() {
+  limpiarEstiloActualizar()
+  dialogActualizar.close()
+  body.classList.remove('blur')
+}
+function actualizarProducto(id, nuevoNombre, nuevoPrecio, nuevoStock, nuevaImagen, nuevoRecomendado, nuevaCategoria) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Actualizar Producto',
+    text: '¿Quieres actualizar el producto?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      const formData = {
+        nombre: nuevoNombre,
+        precio: nuevoPrecio,
+        stock: nuevoStock,
+        imagen: nuevaImagen,
+        recomendado: nuevoRecomendado,
+        categoria_id: nuevaCategoria
+      }
+      
+      fetch(routeActualizarProd + `${id}`, {
         method: 'PUT',
-        body: JSON.stringify(producto),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': auth.get('Authorization')
-        }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       })
-      .then(response => response.json())
-      .then(data => {
-        notificacionConfirmacion('success','Producto Actualizado','El producto ha sido actualizado con éxito.')
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Producto Actualizado', 'El producto ha sido actualizado.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al actualizar el producto.') }
       })
       .catch(error => {
-        console.error('Error al editar el producto', error)
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
       })
-    })
-}
-function eliminarProductoForm(id) {
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const auth = new Headers()
-      auth.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/producto/eliminar/${id}`, {
-        method: 'DELETE',
-        headers: auth
-      })
-      .then(response => response.json())
-      .then(data => {
-        notificacionConfirmacion('success','Producto Desactivado','El producto ha sido desactivado con éxito.')
-      })
-      .catch(error => {
-        console.error('Error al eliminar el producto: ',error)
-      })
-    })
-}
-function activarProductoForm(id) {
-  buscarUsuario(userData)
-    .then(username => {
-      const c = desencriptar(ps)
-      const headers = new Headers()
-      headers.append('Authorization','Basic ' + btoa(username + ":" + c))
-      fetch(`http://localhost:8080/producto/activar/${id}`, {
-        method: 'DELETE',
-        headers: headers
-      })
-      .then(response => response.json())
-      .then(data => {
-        notificacionConfirmacion('success','Producto Activado','El producto ha sido activado con éxito.')
-      })
-      .catch(error => {
-        console.error('Error al activar el producto: ',error)
-      })
-    })
-}
-function datosEditar(producto) {
-  idProducto.value = producto.id_producto
-  nombreProducto.value = producto.nombre
-  precioProducto.value = parseFloat(producto.precio).toFixed(2)
-  stockProducto.value = parseInt(producto.stock)
-  imagenProducto.value = producto.imagen
-  comboEstado.value = producto.vigencia ? 'si' : 'no'
-  comboRecomendado.value = producto.recomendado ? 'si' : 'no'
-
-  comboboxCategoria()
-  .then(() => {
-    seleccionarCategoriaPorId(producto.categoria.id_categoria)
-  })
-  .catch(error => {
-    console.error('Error: ',error )
-  })
-}
-function seleccionarCategoriaPorId(categoriaId) {
-  const opcionesCategoria = comboCategoria.options
-  for (let i = 0; i < opcionesCategoria.length; i++) {
-    if (opcionesCategoria[i].value === categoriaId.toString()) {
-      opcionesCategoria[i].selected = true;
-      break;
     }
-  }
+  })
 }
-function redireccionar() {
-  window.location.href = "../html/administrador.html"
+
+function mostrarDialogAgregar() {
+  dialogAgregar.showModal()
+  body.classList.add('blur')
+  precioProducto.value = '0.00'
+  stockProducto.value = '0'
+
+  let nuevoPrecio = parseFloat(precioProducto.value)
+  let nuevoStock = parseInt(stockProducto.value)
+  let nuevoRecomendado = recomendadoProducto.value
+  const categoriaProd = parseInt(categoriasProducto.value)
+
+  precioProducto.addEventListener('input', function() {
+    nuevoPrecio = parseFloat(this.value)
+  })
+  stockProducto.addEventListener('input', function() {
+    nuevoStock = parseInt(this.value)
+  })
+  recomendadoProducto.addEventListener('change', function() {
+    nuevoRecomendado = this.value === 'si' ? true : false
+  })
+
+  botonAgregar.addEventListener('click', () => {
+  const nombreProd = nombreProducto.value
+  const imagenProd = imagenProducto.value
+
+    if(nombreProd === '' && imagenProd === '') {
+      errorInput(nombreProducto)
+      errorInput(imagenProducto)
+      return
+    }
+    if(nombreProd === '') {
+      errorInput(nombreProducto)
+      return
+    }
+    if(imagenProd === '') {
+      errorInput(imagenProducto)
+      return
+    }
+
+    cerrarDialogAgregar()
+    agregarProducto(nombreProd, nuevoPrecio, nuevoStock, nuevoRecomendado, imagenProd, categoriaProd)
+  })
 }
-function comboboxCategoria() {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:8080/categoria/listar')
-      .then(response => response.json())
-      .then(data => {
-        comboCategoria.innerHTML = ''
+function cerrarDialogAgregar() {
+  limpiarEstilo()
+  dialogAgregar.close()
+  body.classList.remove('blur')
+}
+function limpiarEstilo() {
+  const elements = document.querySelectorAll('#dialog-agregar input, #dialog-agregar textarea')
 
-        data.forEach(categoria => {
-          const option = document.createElement('option')
-          option.value = categoria.id_categoria
-          option.textContent = categoria.nombre
-          comboCategoria.appendChild(option)
-        })
+  elements.forEach((elemento) => {
+    elemento.classList.remove('border-rose-500')
+    elemento.classList.remove('placeholder-red-200')
+    elemento.placeholder = ''
+  })
 
-        resolve()
+  nombreProducto.value = ''
+  imagenProducto.value = ''
+  precioProducto.value = '0.00'
+  stockProducto.value = '0'
+}
+function agregarProducto(nombreA, precioA, stockA, recomendadoA, imagenA, categoria) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Agregar Producto',
+    text: '¿Quieres agregar el producto?',
+    showCancelButton: true,
+    showConfirmButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if(result.isConfirmed) {
+      const formData = {
+        nombre: nombreA,
+        precio: precioA,
+        stock: stockA,
+        vigencia: true,
+        recomendado: recomendadoA,
+        imagen: imagenA,
+        categoria_id: categoria
+      }
+      
+      fetch(routeAgregarProd, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if(response.ok) { notificacionConfirmacion('success', 'Producto Agregado', 'El producto ha sido agregado.') }
+        else { notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error al agregar el producto.') }
       })
       .catch(error => {
-        console.error('Error al obtener los datos de las categorias: ', error)
-        reject(error)
+        notificacionConfirmacion('error', 'Error', 'Ha ocurrido un error.')
+        console.error(error)
       })
-  });
+    }
+  })
 }
-function comboboxCategoriaR() {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:8080/categoria/listar')
-      .then(response => response.json())
-      .then(data => {
-        comboCategoriaR.innerHTML = ''
 
-        data.forEach(categoria => {
-          const option = document.createElement('option')
-          option.value = categoria.id_categoria
-          option.textContent = categoria.nombre
-          comboCategoriaR.appendChild(option)
-        })
-
-        resolve()
-      })
-      .catch(error => {
-        console.error('Error al obtener los datos de las categorias: ', error)
-        reject(error)
-      })
-  });
-}
 function notificacionConfirmacion(icon, title, text) {
   Swal.fire({
     icon: icon,
@@ -413,59 +444,76 @@ function notificacionConfirmacion(icon, title, text) {
     }
   })
 }
-function validarStock(input) {
-  input.value = input.value.replace(/[^0-9]/g, '')
-}
-function validarPrecio(input) {
-  input.value = input.value.replace(/[^0-9.]/g, '')
-  var partes = input.value.split('.');
-  if (partes.length > 1 && partes[1].length > 2) {
-    partes[1] = partes[1].substring(0, 2);
-    input.value = partes.join('.');
-  }
-}
-function limpiarCampos() {
-  nombreProductoR.value = ""
-  precioProductoR.value = ""
-  stockProductoR.value = ""
-  imagenProductoR.value = ""
-}
-function aplicarEstiloError(elemento) {
-  if(elemento.value === '') {
-    elemento.style.boxShadow = '0 0 5px 2px rgba(255, 0, 0, 0.5)'
-  } else {
-    elemento.style.boxShadow = ''
-  }
-}
-function validarCampos() {
-  aplicarEstiloError(nombreProductoR)
-  aplicarEstiloError(precioProductoR)
-  aplicarEstiloError(stockProductoR)
-  aplicarEstiloError(imagenProductoR)
-}
-function desencriptar(password) {
-  let passwordDesencript = ""
-  for(let i = 0; i < password.length; i++) {
-    const caracter = password[i]
-    const valorAsci = caracter.charCodeAt(0)
-    const nuevoValorAsci = valorAsci - 30
-    const nuevoCaracter = String.fromCharCode(nuevoValorAsci)
-    passwordDesencript += nuevoCaracter
-  }
-  return passwordDesencript
-}
-function buscarUsuario(userId) {
-  return fetch(`http://localhost:8080/usuario/id/${userId}`)
-  .then(response => response.json())
-  .then(user => {
-    if(user && user.username) {
-      return user.username
-    } else {
-      throw new Error('No se encontró el nombre de usuario')
+
+function valorCeroPrecioAg(input) {
+  input.addEventListener('focus', function() {
+    if(this.value === '0.00') {
+      this.value = ''
     }
   })
-  .catch(error => {
-    console.error('Error al obtener los datos del usuario: ', error)
-    throw error
+  input.addEventListener('blur', function() {
+    if(this.value.trim() === '') {
+      this.value = '0.00';
+    }
   })
+  input.addEventListener('input', function() {
+    if(this.value.trim() === '') {
+      this.value = '0.00'
+    }
+  })
+}
+function valorStockAg(input) {
+  input.addEventListener('focus', function() {
+    if(this.value === '0') {
+      this.value = ''
+    }
+  })
+  input.addEventListener('blur', function() {
+    if(this.value.trim() === '') {
+      this.value = '0'
+    }
+  })
+  input.addEventListener('input', function() {
+    if(this.value.trim() === '') {
+      this.value = '0'
+    }
+  })
+}
+
+function valorCeroStock(input) {
+  input.addEventListener('focus', function() {
+    if(this.value === '0') {
+      this.value = ''
+    }
+  })
+  input.addEventListener('blur', function() {
+    if(this.value.trim() === '') {
+      this.value = '0'
+    }
+  })
+  input.addEventListener('input', function() {
+    if(this.value.trim() === '') {
+      this.value = '0'
+    }
+  })
+}
+function valorCeroPrecio(input) {
+  input.addEventListener('focus', function() {
+    if(this.value === '0.00') {
+      this.value = ''
+    }
+  })
+  input.addEventListener('blur', function() {
+    if(this.value.trim() === '') {
+      this.value = '0.00';
+    }
+  })
+  input.addEventListener('input', function() {
+    if(this.value.trim() === '') {
+      this.value = '0.00'
+    }
+  })
+}
+function volver() {
+  window.history.back()
 }
